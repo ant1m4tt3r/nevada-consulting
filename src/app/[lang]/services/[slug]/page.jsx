@@ -331,6 +331,19 @@ export default async function ServicePage({ params }) {
                 </div>
               )}
 
+              {/* Investment */}
+              {service.investment && (
+                <p className='text-gray-600 leading-relaxed text-[16px]'>
+                  <span className='font-bold text-gray-900'>
+                    {service.investment.label}
+                  </span>{' '}
+                  {service.investment.price}
+                  {service.investment.installments && (
+                    <> {service.investment.installments}</>
+                  )}
+                </p>
+              )}
+
               {/* Outro */}
               {parsed.outro.length > 0 && (
                 <div className='space-y-4 mt-4'>
