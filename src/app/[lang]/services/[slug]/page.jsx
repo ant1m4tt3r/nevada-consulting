@@ -225,6 +225,36 @@ function renderStepCardContent(blocks, links, lang) {
   });
 }
 
+function InvestmentLine({ investment }) {
+  if (!investment) return null;
+  return (
+    <p className='text-gray-600 leading-relaxed text-[16px]'>
+      <span className='font-bold text-gray-900'>{investment.label}</span>{' '}
+      {investment.price}
+      {investment.installments ? <> {investment.installments}</> : null}
+    </p>
+  );
+}
+
+function PackageHeader({ name, price, subtitle, tagline }) {
+  return (
+    <div className='mb-8'>
+      <div className='flex flex-wrap items-center gap-3'>
+        <h2 className='text-2xl md:text-3xl font-bold text-gray-900'>{name}</h2>
+        {price && (
+          <span className='rounded-full bg-purple-primary/10 text-purple-primary text-sm font-bold px-4 py-1'>
+            {price}
+          </span>
+        )}
+      </div>
+      {subtitle && (
+        <p className='text-lg font-semibold text-gray-800 mt-2'>{subtitle}</p>
+      )}
+      {tagline && <p className='text-gray-600 text-[16px] mt-2'>{tagline}</p>}
+    </div>
+  );
+}
+
 export async function generateStaticParams() {
   const slugs = Object.keys(slugToKey);
   const langs = ['pt', 'en'];
@@ -289,64 +319,117 @@ export default async function ServicePage({ params }) {
 
           {hasSteps ? (
             <>
-              {/* Intro paragraphs */}
-              {parsed.intro.length > 0 && (
-                <div className='space-y-4 mb-10'>
-                  {parsed.intro.map((block, i) =>
-                    renderBlock(block, i, service.links, lang),
-                  )}
-                </div>
-              )}
+              {/* Package 1 — Complete */}
+              <section className='rounded-2xl border border-purple-primary/20 bg-white p-6 md:p-10 shadow-sm'>
+                <PackageHeader
+                  name={service.packageCompleteName}
+                  price={service.investment?.price}
+                  tagline={service.packageCompleteTagline}
+                />
 
-              {/* "Como funciona" label */}
-              {parsed.howItWorksLabel && (
-                <p className='text-xs font-bold uppercase tracking-widest text-purple-primary mb-6'>
-                  {parsed.howItWorksLabel}
-                </p>
-              )}
+                {/* Intro paragraphs */}
+                {parsed.intro.length > 0 && (
+                  <div className='space-y-4 mb-10'>
+                    {parsed.intro.map((block, i) =>
+                      renderBlock(block, i, service.links, lang),
+                    )}
+                  </div>
+                )}
 
-              {/* Step cards */}
-              {parsed.steps.length > 0 && (
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mb-10'>
-                  {parsed.steps.map((step) => (
-                    <div
-                      key={step.number}
-                      className='rounded-xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col gap-3'
-                    >
-                      <span className='text-3xl font-black text-purple-primary/20 leading-none'>
-                        {step.number}
-                      </span>
-                      <h3 className='font-bold text-gray-900 text-base leading-snug'>
-                        {step.title}
-                      </h3>
-                      <div className='flex flex-col gap-3'>
-                        {renderStepCardContent(
-                          step.content,
-                          service.links,
-                          lang,
-                        )}
+                {/* "Como funciona" label */}
+                {parsed.howItWorksLabel && (
+                  <p className='text-xs font-bold uppercase tracking-widest text-purple-primary mb-6'>
+                    {parsed.howItWorksLabel}
+                  </p>
+                )}
+
+                {/* Step cards */}
+                {parsed.steps.length > 0 && (
+                  <div className='grid grid-cols-1 md:grid-cols-3 gap-5 mb-10'>
+                    {parsed.steps.map((step) => (
+                      <div
+                        key={step.number}
+                        className='rounded-xl border border-gray-200 bg-white p-6 shadow-sm flex flex-col gap-3'
+                      >
+                        <span className='text-3xl font-black text-purple-primary/20 leading-none'>
+                          {step.number}
+                        </span>
+                        <h3 className='font-bold text-gray-900 text-base leading-snug'>
+                          {step.title}
+                        </h3>
+                        <div className='flex flex-col gap-3'>
+                          {renderStepCardContent(
+                            step.content,
+                            service.links,
+                            lang,
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    ))}
+                  </div>
+                )}
 
-              {/* Investment */}
-              {service.investment && (
-                <p className='text-gray-600 leading-relaxed text-[16px]'>
-                  <span className='font-bold text-gray-900'>
-                    {service.investment.label}
-                  </span>{' '}
-                  {service.investment.price}
-                  {service.investment.installments && (
-                    <> {service.investment.installments}</>
+                <InvestmentLine investment={service.investment} />
+
+                <div className='mt-2 flex flex-col items-start gap-1'>
+                  {service.callout && (
+                    <p className='text-purple-primary font-semibold text-lg italic'>
+                      {service.callout}
+                    </p>
                   )}
-                </p>
+                  <BookServiceButton
+                    slug={slug}
+                    serviceName={`${service.subtitle} — ${service.packageCompleteName}`}
+                    b2b={false}
+                    ctaLabel={service.ctaLabel}
+                  />
+                </div>
+              </section>
+
+              {/* Divider */}
+              <div className='flex items-center gap-4 my-14'>
+                <div className='flex-1 h-px bg-gradient-to-r from-transparent to-purple-primary/40' />
+                <div className='w-2 h-2 rounded-full bg-purple-primary/60' />
+                <div className='w-3 h-3 rounded-full bg-purple-primary' />
+                <div className='w-2 h-2 rounded-full bg-purple-primary/60' />
+                <div className='flex-1 h-px bg-gradient-to-l from-transparent to-purple-primary/40' />
+              </div>
+
+              {/* Package 2 — Essential */}
+              {service.packageEssential && (
+                <section className='rounded-2xl border border-gray-200 bg-gray-50 p-6 md:p-10 shadow-sm'>
+                  <PackageHeader
+                    name={service.packageEssential.name}
+                    price={service.packageEssential.investment?.price}
+                    subtitle={service.packageEssential.subtitle}
+                    tagline={service.packageEssential.tagline}
+                  />
+
+                  <div className='space-y-6 mb-8'>
+                    {renderDescription(
+                      service.packageEssential.description,
+                      service.links,
+                      lang,
+                    )}
+                  </div>
+
+                  <InvestmentLine
+                    investment={service.packageEssential.investment}
+                  />
+
+                  <div className='mt-2'>
+                    <BookServiceButton
+                      slug={slug}
+                      serviceName={`${service.subtitle} — ${service.packageEssential.name}`}
+                      whatsappCta
+                    />
+                  </div>
+                </section>
               )}
 
               {/* Outro */}
               {parsed.outro.length > 0 && (
-                <div className='space-y-4 mt-4'>
+                <div className='space-y-4 mt-14'>
                   {parsed.outro.map((block, i) =>
                     renderBlock(block, i, service.links, lang),
                   )}
@@ -372,27 +455,28 @@ export default async function ServicePage({ params }) {
             </>
           )}
 
-          {service.callout ? (
-            <div className='mt-10 rounded-2xl border border-purple-primary/25 bg-purple-primary/5 px-8 py-8 justify-items-center'>
-              <p className='text-purple-primary font-semibold text-xl italic mb-1 text-center'>
-                {service.callout}
-              </p>
+          {!hasSteps &&
+            (service.callout ? (
+              <div className='mt-10 rounded-2xl border border-purple-primary/25 bg-purple-primary/5 px-8 py-8 justify-items-center'>
+                <p className='text-purple-primary font-semibold text-xl italic mb-1 text-center'>
+                  {service.callout}
+                </p>
+                <BookServiceButton
+                  slug={slug}
+                  serviceName={service.subtitle}
+                  b2b={serviceConfig?.b2b ?? false}
+                  ctaLabel={service.ctaLabel}
+                  alwaysShowLabel
+                />
+              </div>
+            ) : (
               <BookServiceButton
                 slug={slug}
                 serviceName={service.subtitle}
                 b2b={serviceConfig?.b2b ?? false}
                 ctaLabel={service.ctaLabel}
-                alwaysShowLabel
               />
-            </div>
-          ) : (
-            <BookServiceButton
-              slug={slug}
-              serviceName={service.subtitle}
-              b2b={serviceConfig?.b2b ?? false}
-              ctaLabel={service.ctaLabel}
-            />
-          )}
+            ))}
         </div>
       </main>
     </>
