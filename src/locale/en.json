@@ -57,6 +57,18 @@
         "investment": {
           "label": "Investment:",
           "price": "$229.90"
+        },
+        "packageCompleteName": "Complete Package",
+        "packageCompleteTagline": "Strategic support from diagnosis to final delivery, with one-on-one sessions.",
+        "packageEssential": {
+          "name": "Essential LinkedIn Package",
+          "subtitle": "Strategic LinkedIn & CV Optimization",
+          "tagline": "Ideal for professionals who want to improve their LinkedIn presence and get a CV review quickly and objectively.",
+          "description": "How it works:\n\n- Fill out a detailed form about your journey, goals, and experience\n- Complete analysis of your current profile\n- Strategic headline review\n- ATS ranking and profile optimization\n- Strategic rewriting of your career narrative\n- Keyword suggestions to increase visibility in searches\n- Adjustments to your professional experience to highlight impact and results\n- Profile improvement recommendations\n\nFormat:\n\n- 100% asynchronous\n- No meetings\n- Delivery within 5 business days\n\nDeliverable:\n\n- Document with all changes ready to apply\n- Personalized positioning recommendations\n- Real-time WhatsApp support based on your needs, applications, etc.",
+          "investment": {
+            "label": "Investment:",
+            "price": "$114.90"
+          }
         }
       },
       "sixth": {

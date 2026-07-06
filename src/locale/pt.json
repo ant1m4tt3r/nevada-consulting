@@ -58,6 +58,19 @@
           "label": "Investimento:",
           "price": "R$ 1.200",
           "installments": "(Pode ser parcelado em até 4x de R$ 300, sem juros.)"
+        },
+        "packageCompleteName": "Pacote Completo",
+        "packageCompleteTagline": "Acompanhamento estratégico do diagnóstico à entrega final, com sessões individuais.",
+        "packageEssential": {
+          "name": "Pacote Essencial LinkedIn",
+          "subtitle": "Otimização Estratégica de LinkedIn & CV",
+          "tagline": "Ideal para profissionais que desejam melhorar sua presença no LinkedIn e revisão do CV de forma rápida e objetiva.",
+          "description": "Como funciona:\n\n- Preenchimento de formulário detalhado sobre trajetória, objetivos e experiências\n- Análise completa do perfil atual\n- Revisão estratégica do Headline\n- Rankeamento para ATS e otimização de perfil\n- Reescrita estratégica da narrativa de carreira\n- Sugestões de palavras-chave para aumentar visibilidade em buscas\n- Ajustes nas experiências profissionais para destacar impacto e resultados\n- Recomendações de melhorias no perfil\n\nFormato:\n\n- 100% assíncrono\n- Sem reuniões\n- Entrega em até 5 dias úteis\n\nEntregável:\n\n- Documento com todas as alterações prontas para aplicação\n- Recomendações personalizadas de posicionamento\n- Suporte pelo WhatsApp em tempo real de acordo com necessidade, aplicações, etc",
+          "investment": {
+            "label": "Investimento:",
+            "price": "R$ 590",
+            "installments": "(dividido em até 2x)"
+          }
         }
       },
       "sixth": {
