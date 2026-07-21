@@ -26,7 +26,7 @@ export default function HomeValueBridge() {
 
         <div className='grid grid-cols-[1fr_42px_1fr] items-stretch rounded-3xl border border-white/[0.08] bg-white/[0.035] p-4 shadow-[0_30px_80px_rgba(0,0,0,0.25)] max-[520px]:grid-cols-1 max-[520px]:gap-2.5'>
           <div className='min-h-[270px] rounded-2xl border border-white/[0.08] bg-[#100d12] p-4 max-[520px]:min-h-[235px]'>
-            <div className='text-[9px] font-bold uppercase tracking-[0.12em] text-[#9f94a3]'>
+            <div className='text-[10px] font-bold uppercase tracking-[0.12em] text-[#bbb1bf]'>
               {t('home.bridge.codeLabel')}
             </div>
             <div className='mt-4 grid gap-2'>
@@ -40,7 +40,7 @@ export default function HomeValueBridge() {
                     <strong className='text-xs leading-tight text-[#f1edf2]'>
                       {technology}
                     </strong>
-                    <small className='text-[8px] leading-snug tracking-[0.03em] text-[#928895]'>
+                    <small className='text-[10px] leading-snug tracking-[0.02em] text-[#b8aeba]'>
                       {description}
                     </small>
                   </div>
@@ -54,7 +54,7 @@ export default function HomeValueBridge() {
           </div>
 
           <div className='flex min-h-[270px] flex-col gap-2 rounded-2xl border border-white/[0.08] bg-[#f7f4f8] p-4 pt-5 text-brand-ink max-[520px]:min-h-[235px]'>
-            <div className='mb-1 text-[9px] font-bold uppercase tracking-[0.12em] text-[#776b7a]'>
+            <div className='mb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#625766]'>
               {t('home.bridge.impactLabel')}
             </div>
             {outcomes.map(([metric, label], index) => (
@@ -66,7 +66,7 @@ export default function HomeValueBridge() {
                   <strong className='text-lg tracking-[-0.04em]'>
                     {metric}
                   </strong>
-                  <span className='text-[8px] uppercase text-[#827684]'>
+                  <span className='text-[10px] font-semibold uppercase tracking-[0.01em] text-[#625766]'>
                     {label}
                   </span>
                 </div>
