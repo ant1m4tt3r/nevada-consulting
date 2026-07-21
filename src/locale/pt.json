@@ -215,6 +215,29 @@
         "live": "busca ativa",
         "role": "Engenheiro(a) Backend Sênior",
         "sources": "Sinais técnicos",
+        "ariaLabel": "Ilustração de scorecards para diferentes áreas de recrutamento",
+        "profiles": [
+          {
+            "id": "technology",
+            "role": "Engenheiro(a) Backend Sênior",
+            "sources": "Sinais técnicos"
+          },
+          {
+            "id": "marketing",
+            "role": "Head de Growth Sênior",
+            "sources": "Sinais de crescimento"
+          },
+          {
+            "id": "leadership",
+            "role": "Diretor(a) de Operações",
+            "sources": "Sinais de liderança"
+          },
+          {
+            "id": "fintech",
+            "role": "Head de Produto Fintech",
+            "sources": "Sinais de negócio"
+          }
+        ],
         "validated": "5/5",
         "validatedLabel": "critérios-chave",
         "outcome": "Indicadores conectados à função",

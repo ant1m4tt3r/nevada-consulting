@@ -205,6 +205,29 @@
         "live": "active search",
         "role": "Senior Backend Engineer",
         "sources": "Technical signals",
+        "ariaLabel": "Scorecard illustration for different recruitment specialties",
+        "profiles": [
+          {
+            "id": "technology",
+            "role": "Senior Backend Engineer",
+            "sources": "Technical signals"
+          },
+          {
+            "id": "marketing",
+            "role": "Senior Head of Growth",
+            "sources": "Growth signals"
+          },
+          {
+            "id": "leadership",
+            "role": "Operations Director",
+            "sources": "Leadership signals"
+          },
+          {
+            "id": "fintech",
+            "role": "Fintech Head of Product",
+            "sources": "Business signals"
+          }
+        ],
         "validated": "5/5",
         "validatedLabel": "key criteria",
         "outcome": "Role-connected indicators",
