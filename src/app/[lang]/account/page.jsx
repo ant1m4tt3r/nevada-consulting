@@ -6,6 +6,10 @@ import { prisma } from '../../../lib/prisma.js';
 import { serviceItems } from '../../../lib/servicesConfig.js';
 import Navbar from '../../../components/client/Navbar';
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 const i18n = {
   pt: {
     title: 'Minha Conta — Nevada Consulting',
@@ -78,49 +82,49 @@ export default async function DashboardPage({ params }) {
   return (
     <>
       <Navbar hideNav />
-      <main className='min-h-screen bg-[#0e0e0e] text-white px-6 pt-32 pb-20'>
-        <div className='max-w-2xl mx-auto'>
-          <p className='text-purple-primary text-sm font-semibold uppercase tracking-widest mb-3'>
+      <main className='min-h-screen bg-brand-cream px-5 pb-20 pt-36 text-brand-ink'>
+        <div className='mx-auto max-w-4xl'>
+          <p className='text-xs font-black uppercase tracking-[0.18em] text-purple-primary'>
             {t.area}
           </p>
-          <h1 className='text-4xl font-bold mb-2'>
+          <h1 className='mt-5 text-5xl font-black tracking-[-0.05em] md:text-7xl'>
             {t.hello}, {firstName}!
           </h1>
-          <p className='text-gray-400 text-lg mb-10'>{t.welcome}</p>
+          <p className='mt-4 text-lg text-brand-muted'>{t.welcome}</p>
 
-          <section>
-            <h2 className='text-xl font-semibold mb-5'>{t.upcoming}</h2>
+          <section className='mt-14 rounded-3xl border border-brand-line bg-brand-paper p-6 shadow-sm md:p-10'>
+            <h2 className='font-editorial text-3xl'>{t.upcoming}</h2>
 
             {upcomingBookings.length === 0 ? (
-              <div className='bg-[#1a1a1a] rounded-2xl p-8 text-center'>
-                <p className='text-gray-400 mb-6'>{t.noBookings}</p>
+              <div className='mt-8 rounded-2xl border border-dashed border-brand-line bg-brand-cream p-8 text-center'>
+                <p className='text-brand-muted'>{t.noBookings}</p>
                 <Link
                   href={`/${lang}#services`}
-                  className='inline-block bg-purple-primary hover:bg-purple-700 transition-colors text-white font-semibold px-6 py-3 rounded-full text-sm'
+                  className='mt-5 inline-flex rounded-full bg-brand-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-violet'
                 >
                   {t.services}
                 </Link>
               </div>
             ) : (
-              <ul className='flex flex-col gap-4'>
+              <ul className='mt-8 divide-y divide-brand-line'>
                 {upcomingBookings.map((booking) => (
                   <li
                     key={booking.id}
-                    className='bg-[#1a1a1a] rounded-2xl px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3'
+                    className='flex flex-col gap-4 py-6 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between'
                   >
                     <div>
-                      <p className='font-semibold text-white'>
+                      <p className='font-bold'>
                         {getServiceName(booking.service, lang)}
                       </p>
-                      <p className='text-gray-400 text-sm mt-1'>
+                      <time className='mt-1 block text-sm text-brand-muted'>
                         {formatDate(booking.date, lang)}
-                      </p>
+                      </time>
                     </div>
                     <span
-                      className={`self-start sm:self-auto text-xs font-semibold px-3 py-1 rounded-full ${
+                      className={`w-fit rounded-full px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.08em] ${
                         booking.status === 'CONFIRMED'
-                          ? 'bg-green-900 text-green-300'
-                          : 'bg-yellow-900 text-yellow-300'
+                          ? 'bg-emerald-100 text-emerald-800'
+                          : 'bg-amber-100 text-amber-800'
                       }`}
                     >
                       {booking.status === 'CONFIRMED' ? t.confirmed : t.pending}

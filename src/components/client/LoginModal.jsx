@@ -3,9 +3,11 @@
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
-import { FaFacebook } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
 import { useTranslation } from 'react-i18next';
+
+const inputClassName =
+  'w-full rounded-xl border border-brand-line bg-brand-cream px-4 py-3 text-brand-ink placeholder:text-brand-muted/60 focus:border-purple-primary focus:outline-none focus:ring-2 focus:ring-purple-primary/15';
 
 const LoginModal = ({ isOpen, onClose }) => {
   const { t } = useTranslation();
@@ -86,16 +88,16 @@ const LoginModal = ({ isOpen, onClose }) => {
     <div className='fixed inset-0 z-[100] flex items-center justify-center'>
       {/* Backdrop */}
       <div
-        className='absolute inset-0 bg-black/70 backdrop-blur-sm'
+        className='absolute inset-0 bg-brand-ink/60 backdrop-blur-sm'
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className='relative bg-[#111] border border-gray-800 rounded-2xl p-8 w-full max-w-md mx-4 z-10'>
+      <div className='relative z-10 mx-4 w-full max-w-md rounded-3xl border border-brand-line bg-brand-paper p-8 text-brand-ink shadow-[0_24px_80px_rgba(23,19,27,0.2)]'>
         {/* Close button */}
         <button
           onClick={onClose}
-          className='absolute top-4 right-4 text-gray-400 hover:text-white transition-colors'
+          className='absolute right-4 top-4 text-brand-muted transition-colors hover:text-brand-ink'
         >
           <IoClose size={24} />
         </button>
@@ -104,14 +106,14 @@ const LoginModal = ({ isOpen, onClose }) => {
         {emailSent ? (
           <div className='flex flex-col items-center text-center py-4'>
             <div className='text-5xl mb-4'>📧</div>
-            <h2 className='text-white text-xl font-bold mb-3'>
+            <h2 className='mb-3 text-xl font-bold text-brand-ink'>
               {t('login.checkEmailTitle')}
             </h2>
-            <p className='text-gray-400 text-sm leading-relaxed mb-2'>
+            <p className='mb-2 text-sm leading-relaxed text-brand-muted'>
               {t('login.checkEmailBody')}{' '}
-              <strong className='text-white'>{email}</strong>.
+              <strong className='text-brand-ink'>{email}</strong>.
             </p>
-            <p className='text-gray-500 text-xs mb-6'>
+            <p className='mb-6 text-xs text-brand-muted/80'>
               {t('login.checkEmailSpam')}
             </p>
             <button
@@ -124,12 +126,12 @@ const LoginModal = ({ isOpen, onClose }) => {
         ) : (
           <>
             {/* Title */}
-            <h2 className='text-white text-2xl font-bold mb-2'>
+            <h2 className='mb-2 text-2xl font-bold text-brand-ink'>
               {mode === 'login' ? t('login.title') : t('login.registerTitle')}
             </h2>
 
             {/* Mode toggle */}
-            <p className='text-gray-400 text-sm mb-6'>
+            <p className='mb-6 text-sm text-brand-muted'>
               {mode === 'login' ? t('login.noAccount') : t('login.hasAccount')}{' '}
               <button
                 onClick={() =>
@@ -152,7 +154,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
                 <input
                   type='password'
@@ -160,7 +162,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
 
                 {error && <p className='text-red-400 text-sm'>{error}</p>}
@@ -184,7 +186,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
                 <input
                   type='email'
@@ -192,7 +194,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
                 <input
                   type='password'
@@ -200,7 +202,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
                 <input
                   type='password'
@@ -208,7 +210,7 @@ const LoginModal = ({ isOpen, onClose }) => {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
-                  className='w-full bg-[#1a1a1a] border border-gray-700 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-purple-primary'
+                  className={inputClassName}
                 />
 
                 {error && <p className='text-red-400 text-sm'>{error}</p>}
@@ -225,18 +227,18 @@ const LoginModal = ({ isOpen, onClose }) => {
 
             {/* Divider */}
             <div className='flex items-center my-6'>
-              <div className='flex-1 border-t border-gray-700' />
-              <span className='px-4 text-gray-400 text-sm'>
+              <div className='flex-1 border-t border-brand-line' />
+              <span className='px-4 text-sm text-brand-muted'>
                 {t('login.or')}
               </span>
-              <div className='flex-1 border-t border-gray-700' />
+              <div className='flex-1 border-t border-brand-line' />
             </div>
 
             {/* OAuth buttons */}
             <div className='space-y-3'>
               <button
                 onClick={() => signIn('google')}
-                className='w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 rounded-lg transition-colors cursor-pointer'
+                className='flex w-full cursor-pointer items-center justify-center gap-3 rounded-xl border border-brand-line bg-white py-3 font-semibold text-brand-ink transition-colors hover:bg-brand-cream'
               >
                 <FcGoogle size={22} />
                 {t('login.google')}

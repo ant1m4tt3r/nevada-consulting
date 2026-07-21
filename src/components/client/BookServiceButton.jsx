@@ -3,35 +3,30 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useTranslation } from 'react-i18next';
+import { FiArrowUpRight } from 'react-icons/fi';
 import { WHATSAPP_NUMBER } from '../../lib/servicesConfig.js';
 import LoginModal from './LoginModal.jsx';
 import SchedulingModal from './SchedulingModal.jsx';
 
-function NeonButton({ children, onClick, href, target, rel, noMargin }) {
-  const baseClass =
-    'relative z-10 px-6 py-3 bg-purple-primary text-white font-semibold rounded-lg transition-transform duration-300 group-hover:scale-105 h-12 flex items-center justify-center text-base';
-
-  const wrapper = (content) => (
-    <div
-      className={`group relative w-fit active:scale-95${noMargin ? '' : ' mt-8'}`}
-    >
-      {content}
-      <span className='pointer-events-none absolute -inset-3 z-0 rounded-xl bg-gradient-to-br from-fuchsia-500 to-purple-700 opacity-0 blur-lg transition-all duration-300 group-hover:opacity-50'></span>
-    </div>
-  );
+function ActionButton({ children, onClick, href, target, rel, noMargin }) {
+  const className = `inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-brand-ink bg-brand-ink px-6 py-3 text-sm font-bold text-white transition duration-200 hover:-translate-y-0.5 hover:bg-brand-violet hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-primary focus-visible:ring-offset-2 ${
+    noMargin ? '' : 'mt-6'
+  }`;
 
   if (href) {
-    return wrapper(
-      <a href={href} target={target} rel={rel} className={baseClass}>
+    return (
+      <a href={href} target={target} rel={rel} className={className}>
         {children}
-      </a>,
+        <FiArrowUpRight />
+      </a>
     );
   }
 
-  return wrapper(
-    <button onClick={onClick} className={`${baseClass} cursor-pointer`}>
+  return (
+    <button onClick={onClick} className={className}>
       {children}
-    </button>,
+      <FiArrowUpRight />
+    </button>
   );
 }
 
@@ -55,13 +50,13 @@ export default function BookServiceButton({
       `Olá! Tenho interesse no serviço: ${serviceName}. Gostaria de saber mais.`,
     );
     return (
-      <NeonButton
+      <ActionButton
         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`}
         target='_blank'
         rel='noopener noreferrer'
       >
         {ctaLabel ?? t('services.talkToSpecialist')}
-      </NeonButton>
+      </ActionButton>
     );
   }
 
@@ -78,9 +73,9 @@ export default function BookServiceButton({
       <>
         <div className='mt-4 flex flex-col sm:flex-row gap-6'>
           {variants.map((v) => (
-            <NeonButton key={v.slug} onClick={() => handleVariantClick(v)}>
+            <ActionButton key={v.slug} onClick={() => handleVariantClick(v)}>
               {session || alwaysShowLabel ? v.label : t('services.loginToBook')}
-            </NeonButton>
+            </ActionButton>
           ))}
         </div>
         <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
@@ -109,18 +104,22 @@ export default function BookServiceButton({
 
   if (whatsappCta) {
     return (
-      <NeonButton href={whatsappHref} target='_blank' rel='noopener noreferrer'>
+      <ActionButton
+        href={whatsappHref}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
         {ctaLabel ?? t('services.talkDirectly')}
-      </NeonButton>
+      </ActionButton>
     );
   }
 
   return (
     <>
-      <NeonButton onClick={handleClick}>
+      <ActionButton onClick={handleClick}>
         {ctaLabel ??
           (session ? t('services.bookSession') : t('services.loginToBook'))}
-      </NeonButton>
+      </ActionButton>
       <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
       <SchedulingModal
         isOpen={schedulingOpen}

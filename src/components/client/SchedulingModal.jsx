@@ -206,14 +206,14 @@ export default function SchedulingModal({
   return (
     <div className='fixed inset-0 z-[100] flex items-center justify-center'>
       <div
-        className='absolute inset-0 bg-black/70 backdrop-blur-sm'
+        className='absolute inset-0 bg-brand-ink/60 backdrop-blur-sm'
         onClick={onClose}
       />
 
-      <div className='relative bg-[#111] border border-gray-800 rounded-2xl p-8 w-full max-w-lg mx-4 z-10 max-h-[90vh] overflow-y-auto'>
+      <div className='relative z-10 mx-4 max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-3xl border border-brand-line bg-brand-paper p-8 text-brand-ink shadow-[0_24px_80px_rgba(23,19,27,0.2)]'>
         <button
           onClick={onClose}
-          className='absolute top-4 right-4 text-gray-400 hover:text-white transition-colors cursor-pointer'
+          className='absolute right-4 top-4 cursor-pointer text-brand-muted transition-colors hover:text-brand-ink'
         >
           <IoClose size={24} />
         </button>
@@ -225,7 +225,7 @@ export default function SchedulingModal({
               <div
                 key={s}
                 className={`h-1.5 flex-1 rounded-full transition-colors duration-300 ${
-                  step >= s ? 'bg-purple-primary' : 'bg-gray-700'
+                  step >= s ? 'bg-purple-primary' : 'bg-brand-line'
                 }`}
               />
             ))}
@@ -235,23 +235,23 @@ export default function SchedulingModal({
         {/* Step 1 — Calendar picker */}
         {step === 1 && (
           <>
-            <h2 className='text-white text-xl font-bold mb-1'>
+            <h2 className='mb-1 text-xl font-bold text-brand-ink'>
               {t.chooseDate}
             </h2>
-            <p className='text-gray-400 text-sm mb-6'>{serviceName}</p>
+            <p className='mb-6 text-sm text-brand-muted'>{serviceName}</p>
 
             {/* Month navigation */}
             <div className='flex items-center justify-between mb-4'>
               <button
                 onClick={handlePrevMonth}
                 disabled={!canGoPrev}
-                className='p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800
+                className='rounded-lg p-1.5 text-brand-muted hover:bg-brand-cream hover:text-brand-ink
                   disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
               >
                 <IoChevronBack size={18} />
               </button>
 
-              <span className='text-white font-semibold text-sm'>
+              <span className='text-sm font-semibold text-brand-ink'>
                 {MONTH_NAMES[lang]?.[calMonth] ?? MONTH_NAMES.pt[calMonth]}{' '}
                 {calYear}
               </span>
@@ -259,7 +259,7 @@ export default function SchedulingModal({
               <button
                 onClick={handleNextMonth}
                 disabled={!canGoNext}
-                className='p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800
+                className='rounded-lg p-1.5 text-brand-muted hover:bg-brand-cream hover:text-brand-ink
                   disabled:opacity-30 disabled:cursor-not-allowed transition-colors cursor-pointer'
               >
                 <IoChevronForward size={18} />
@@ -271,7 +271,7 @@ export default function SchedulingModal({
               {(DAY_NAMES[lang] ?? DAY_NAMES.pt).map((name) => (
                 <div
                   key={name}
-                  className='text-center text-gray-500 text-xs font-medium py-1'
+                  className='py-1 text-center text-xs font-medium text-brand-muted'
                 >
                   {name}
                 </div>
@@ -301,10 +301,10 @@ export default function SchedulingModal({
                       transition-colors duration-200
                       ${
                         isDisabled
-                          ? 'text-gray-600 cursor-not-allowed'
+                          ? 'text-brand-muted/40 cursor-not-allowed'
                           : isSelected
                             ? 'bg-purple-primary text-white'
-                            : 'text-gray-300 hover:bg-purple-primary/20 hover:text-white cursor-pointer'
+                            : 'text-brand-muted hover:bg-purple-primary/15 hover:text-brand-violet cursor-pointer'
                       }
                     `}
                   >
@@ -324,14 +324,14 @@ export default function SchedulingModal({
                 setStep(1);
                 setError('');
               }}
-              className='text-gray-400 hover:text-white text-sm mb-4 flex items-center gap-1 cursor-pointer'
+              className='mb-4 flex cursor-pointer items-center gap-1 text-sm text-brand-muted hover:text-brand-ink'
             >
               {t.back}
             </button>
-            <h2 className='text-white text-xl font-bold mb-1'>
+            <h2 className='mb-1 text-xl font-bold text-brand-ink'>
               {t.chooseTime}
             </h2>
-            <p className='text-gray-400 text-sm mb-6 capitalize'>
+            <p className='mb-6 text-sm capitalize text-brand-muted'>
               {selectedDate && formatDateLabel(selectedDate, lang)}
             </p>
 
@@ -356,7 +356,7 @@ export default function SchedulingModal({
                         ${
                           selectedSlot === slot
                             ? 'border-purple-primary bg-purple-primary text-white'
-                            : 'border-gray-700 text-gray-300 hover:border-purple-primary hover:text-white hover:bg-purple-primary/10'
+                            : 'border-brand-line text-brand-muted hover:border-purple-primary hover:text-brand-violet hover:bg-purple-primary/10'
                         }`}
                     >
                       {formatTimeSlot(slot, lang)}

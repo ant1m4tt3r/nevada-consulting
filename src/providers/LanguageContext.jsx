@@ -7,18 +7,23 @@ import { usePathname } from 'next/navigation';
 
 const LanguageContext = createContext();
 
-export const LanguageProvider = ({ children }) => {
+export const LanguageProvider = ({ children, initialLanguage }) => {
   const { i18n } = useTranslation();
-  const [currentLanguage, setCurrentLanguage] = useState(i18n.language);
+  const [currentLanguage, setCurrentLanguage] = useState(
+    initialLanguage ?? i18n.language,
+  );
   const pathname = usePathname();
 
   useEffect(() => {
+    const urlLanguage = pathname.split('/').filter(Boolean)[0];
+    if (['pt', 'en'].includes(urlLanguage)) return;
+
     const saved = localStorage.getItem('lang');
     if (saved && ['pt', 'en'].includes(saved) && saved !== i18n.language) {
       i18n.changeLanguage(saved);
       setCurrentLanguage(saved);
     }
-  }, [i18n]);
+  }, [i18n, pathname]);
 
   useEffect(() => {
     const pathParts = pathname.split('/').filter(Boolean);

@@ -6,6 +6,10 @@ import { serviceItems } from '../../../lib/servicesConfig.js';
 import Navbar from '../../../components/client/Navbar';
 import AdminPricesForm from '../../../components/client/AdminPricesForm';
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 export default async function AdminPage({ params }) {
   const { lang } = await params;
   const session = await getServerSession(authOptions);

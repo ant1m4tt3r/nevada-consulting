@@ -1,23 +1,37 @@
 'use client';
 
-import Navbar from './Navbar';
-import Header from './Header';
-import Services from './Services';
-import Clients from './Clients';
-import About from './About';
-import Contact from './Contact';
-import Footer from './Footer';
+import HomeAbout from './home/HomeAbout';
+import HomeCandidateServices from './home/HomeCandidateServices';
+import HomeClients from './home/HomeClients';
+import HomeContact from './home/HomeContact';
+import HomeFooter from './home/HomeFooter';
+import HomeFaq from './home/HomeFaq';
+import HomeHero from './home/HomeHero';
+import HomeMethod from './home/HomeMethod';
+import HomeNavigation from './home/HomeNavigation';
+import HomeProof from './home/HomeProof';
+import HomeServices from './home/HomeServices';
+import HomeStory from './home/HomeStory';
+import HomeThesis from './home/HomeThesis';
+import HomeValueBridge from './home/HomeValueBridge';
 
 export default function HomePage() {
   return (
-    <>
-      <Navbar />
-      <Header id='home' />
-      <Services id='services' />
-      <Clients id='clients' />
-      <About id='about' />
-      <Contact id='contact' />
-      <Footer />
-    </>
+    <main className='overflow-hidden bg-brand-cream text-brand-ink'>
+      <HomeNavigation />
+      <HomeHero />
+      <HomeClients />
+      <HomeThesis />
+      <HomeServices />
+      <HomeValueBridge />
+      <HomeMethod />
+      <HomeAbout />
+      <HomeStory />
+      <HomeProof />
+      <HomeCandidateServices />
+      <HomeFaq />
+      <HomeContact />
+      <HomeFooter />
+    </main>
   );
 }

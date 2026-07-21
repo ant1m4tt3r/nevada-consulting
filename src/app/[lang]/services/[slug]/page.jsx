@@ -2,7 +2,13 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Navbar from '../../../../components/client/Navbar';
 import BookServiceButton from '../../../../components/client/BookServiceButton';
+import JsonLd from '../../../../components/seo/JsonLd';
 import { slugToKey, serviceItems } from '../../../../lib/servicesConfig';
+import {
+  getLanguageAlternates,
+  getLocalizedUrl,
+  getServiceStructuredData,
+} from '../../../../lib/seo';
 import ptTranslations from '../../../../locale/pt.json';
 import enTranslations from '../../../../locale/en.json';
 
@@ -268,9 +274,40 @@ export async function generateMetadata({ params }) {
 
   const translations = lang === 'pt' ? ptTranslations : enTranslations;
   const service = translations.translation.services[translationKey];
+  const language = lang === 'en' ? 'en' : 'pt';
+  const path = `/services/${slug}`;
+  const serviceTitle = service.seoTitle ?? service.subtitle;
+  const description = service.seoDescription ?? service.description;
+  const title = `${serviceTitle} | Nevada Consulting`;
+  const image = language === 'en' ? '/og-en.png' : '/og.png';
 
   return {
-    title: `${service.subtitle} — Nevada Consulting`,
+    title: { absolute: title },
+    description,
+    alternates: getLanguageAlternates(language, path),
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+      url: getLocalizedUrl(language, path),
+      siteName: 'Nevada Consulting',
+      locale: language === 'pt' ? 'pt_BR' : 'en_US',
+      alternateLocale: language === 'pt' ? ['en_US'] : ['pt_BR'],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: `${serviceTitle} — Nevada Consulting`,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+    },
   };
 }
 
@@ -285,6 +322,34 @@ export default async function ServicePage({ params }) {
   const service = t.services[translationKey];
   const backLabel = t.services.backToServices;
   const serviceConfig = serviceItems.find((s) => s.slug === slug);
+  const pageCopy =
+    lang === 'pt'
+      ? {
+          corporate: 'Solução corporativa',
+          individual: 'Serviço individual',
+          model: serviceConfig?.b2b
+            ? 'Modelo success fee'
+            : 'Atendimento personalizado',
+          ctaEyebrow: 'Próximo passo',
+          ctaTitle: 'Vamos entender o seu momento?',
+          ctaBody: serviceConfig?.b2b
+            ? 'Converse diretamente com a Juliana sobre a posição, o contexto do time e o impacto esperado.'
+            : 'Fale diretamente com a Juliana para escolher o formato mais adequado ao seu objetivo.',
+          response: 'Resposta pessoal em até 1 dia útil',
+        }
+      : {
+          corporate: 'Corporate solution',
+          individual: 'Individual service',
+          model: serviceConfig?.b2b
+            ? 'Success fee model'
+            : 'Personalized support',
+          ctaEyebrow: 'Next step',
+          ctaTitle: 'Shall we understand your context?',
+          ctaBody: serviceConfig?.b2b
+            ? 'Talk directly with Juliana about the role, team context and expected impact.'
+            : 'Talk directly with Juliana to choose the best format for your goal.',
+          response: 'Personal reply within one business day',
+        };
 
   const fullText = service.fullDescription ?? service.description;
   const hasSteps = translationKey === 'fifth';
@@ -294,33 +359,64 @@ export default async function ServicePage({ params }) {
 
   return (
     <>
+      <JsonLd
+        data={getServiceStructuredData({
+          language: lang,
+          slug,
+          name: service.subtitle,
+          description: service.seoDescription ?? service.description,
+          serviceType: serviceConfig?.b2b
+            ? lang === 'pt'
+              ? 'Recrutamento e estratégia de talentos para empresas'
+              : 'Corporate recruiting and talent strategy'
+            : lang === 'pt'
+              ? 'Consultoria de carreira'
+              : 'Career consulting',
+        })}
+      />
       <Navbar hideNav />
-      <main className='min-h-screen bg-white text-gray-900 pt-24 pb-20 px-6'>
-        <div
-          className={`mx-auto mt-8 ${hasSteps ? 'max-w-5xl' : 'max-w-2xl mt-8'}`}
-        >
-          <Link
-            href={`/${lang}#services`}
-            className='inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gray-700 transition-colors duration-200 mb-12'
-          >
-            ← {backLabel}
-          </Link>
-
-          {/* Header */}
-          <div className='mb-10'>
-            <p className='text-purple-primary text-xs font-bold uppercase tracking-widest mb-3'>
-              {t.services.title}
-            </p>
-            <h1 className='text-3xl md:text-4xl font-bold leading-snug text-gray-900 mb-4'>
-              {service.subtitle}
-            </h1>
-            <div className='w-12 h-0.5 bg-purple-primary' />
+      <main className='min-h-screen bg-brand-cream pt-28 text-brand-ink'>
+        <section className='border-b border-brand-line bg-brand-paper py-16 md:py-24'>
+          <div className='mx-auto w-[calc(100%-40px)] max-w-[1180px]'>
+            <Link
+              href={`/${lang}#services`}
+              className='mb-12 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-brand-violet transition hover:-translate-x-1'
+            >
+              <span>←</span> {backLabel}
+            </Link>
+            <div className='grid items-end gap-10 md:grid-cols-[minmax(0,1fr)_auto]'>
+              <div>
+                <p className='mb-5 text-xs font-black uppercase tracking-[0.18em] text-purple-primary'>
+                  {t.services.title}
+                </p>
+                <h1 className='max-w-[880px] text-balance text-5xl font-black leading-[0.95] tracking-[-0.055em] md:text-7xl'>
+                  {service.subtitle}
+                </h1>
+                <p className='mt-7 max-w-3xl text-lg leading-relaxed text-brand-muted md:text-xl'>
+                  {service.description}
+                </p>
+              </div>
+              <div className='flex flex-wrap gap-2 md:max-w-[240px] md:justify-end [&_span]:rounded-full [&_span]:border [&_span]:border-brand-line [&_span]:bg-brand-cream [&_span]:px-4 [&_span]:py-2 [&_span]:text-[11px] [&_span]:font-bold [&_span]:uppercase [&_span]:tracking-[0.08em] [&_span]:text-brand-muted'>
+                <span>
+                  {serviceConfig?.b2b
+                    ? pageCopy.corporate
+                    : pageCopy.individual}
+                </span>
+                <span>{pageCopy.model}</span>
+              </div>
+            </div>
           </div>
+        </section>
 
+        <div
+          className={`mx-auto w-[calc(100%-40px)] py-16 md:py-24 ${
+            hasSteps ? 'max-w-[1180px]' : 'max-w-[1080px]'
+          }`}
+        >
           {hasSteps ? (
             <>
               {/* Package 1 — Complete */}
-              <section className='rounded-2xl border border-purple-primary/20 bg-white p-6 md:p-10 shadow-sm'>
+              <section className='rounded-3xl border border-purple-primary/20 bg-brand-paper p-6 shadow-sm md:p-10'>
                 <PackageHeader
                   name={service.packageCompleteName}
                   price={service.investment?.price}
@@ -397,7 +493,7 @@ export default async function ServicePage({ params }) {
 
               {/* Package 2 — Essential */}
               {service.packageEssential && (
-                <section className='rounded-2xl border border-gray-200 bg-gray-50 p-6 md:p-10 shadow-sm'>
+                <section className='rounded-3xl border border-brand-line bg-white/55 p-6 shadow-sm md:p-10'>
                   <PackageHeader
                     name={service.packageEssential.name}
                     price={service.packageEssential.investment?.price}
@@ -437,30 +533,30 @@ export default async function ServicePage({ params }) {
               )}
             </>
           ) : (
-            <>
-              {service.quote && (
-                <p className='text-gray-700 text-lg italic leading-relaxed mb-4'>
-                  <span className='text-purple-primary font-serif'>
-                    &ldquo;
-                  </span>
-                  {service.quote}
-                  <span className='text-purple-primary font-serif'>
-                    &rdquo;
-                  </span>
-                </p>
-              )}
-              <div className='space-y-6'>
-                {renderDescription(fullText, service.links, lang)}
-              </div>
-            </>
-          )}
+            <div className='grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-20'>
+              <article className='min-w-0'>
+                {service.quote && (
+                  <p className='mb-12 border-l-2 border-purple-primary pl-6 font-editorial text-2xl leading-snug text-brand-violet md:text-3xl'>
+                    <span className='mr-1'>&ldquo;</span>
+                    {service.quote}
+                    <span>&rdquo;</span>
+                  </p>
+                )}
+                <div className='space-y-6'>
+                  {renderDescription(fullText, service.links, lang)}
+                </div>
+              </article>
 
-          {!hasSteps &&
-            (service.callout ? (
-              <div className='mt-10 rounded-2xl border border-purple-primary/25 bg-purple-primary/5 px-8 py-8 justify-items-center'>
-                <p className='text-purple-primary font-semibold text-xl italic mb-1 text-center'>
-                  {service.callout}
+              <aside className='rounded-3xl bg-brand-ink p-7 text-white shadow-[0_24px_80px_rgba(23,19,27,0.16)] lg:sticky lg:top-28 md:p-9'>
+                <p className='mb-5 text-[11px] font-black uppercase tracking-[0.18em] text-brand-lilac'>
+                  {pageCopy.ctaEyebrow}
                 </p>
+                <h2 className='font-editorial text-3xl leading-tight'>
+                  {service.callout || pageCopy.ctaTitle}
+                </h2>
+                <span className='mt-5 block text-sm leading-relaxed text-white/70'>
+                  {pageCopy.ctaBody}
+                </span>
                 <BookServiceButton
                   slug={slug}
                   serviceName={service.subtitle}
@@ -468,15 +564,12 @@ export default async function ServicePage({ params }) {
                   ctaLabel={service.ctaLabel}
                   alwaysShowLabel
                 />
-              </div>
-            ) : (
-              <BookServiceButton
-                slug={slug}
-                serviceName={service.subtitle}
-                b2b={serviceConfig?.b2b ?? false}
-                ctaLabel={service.ctaLabel}
-              />
-            ))}
+                <small className='mt-5 block border-t border-white/15 pt-5 text-xs text-white/60'>
+                  {pageCopy.response}
+                </small>
+              </aside>
+            </div>
+          )}
         </div>
       </main>
     </>

@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -12,6 +10,7 @@ function escapeHtml(str) {
 }
 
 export async function POST(request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   const { name, email, message } = await request.json();
 
   if (!name || !email || !message) {

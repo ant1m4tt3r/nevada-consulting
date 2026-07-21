@@ -1,276 +1,161 @@
 'use client';
 
-import React, { useState } from 'react';
-import 'flag-icons/css/flag-icons.min.css';
-import { Link } from 'react-scroll';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { FiArrowUpRight, FiMenu, FiX } from 'react-icons/fi';
+
 import Logo from '../../assets/icons/Logo.jsx';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../../providers/LanguageContext.jsx';
-import { AnimatedHamburgerButton } from './HamburgerButton';
-import { useRouter, usePathname } from 'next/navigation';
-import NextLink from 'next/link';
 import { useScrollDirection } from '../../hooks/useScrollDirection.js';
-import LoginModal from './LoginModal.jsx';
-import { useSession, signOut } from 'next-auth/react';
 import { trackEvent } from '../../lib/gtm.js';
+import LoginModal from './LoginModal.jsx';
 
-const Navbar = ({ hideNav = false }) => {
+const Navbar = () => {
   const { t } = useTranslation();
   const { changeLanguage, currentLanguage } = useLanguage();
-  const router = useRouter();
-  const pathname = usePathname();
-
   const { data: session } = useSession();
-  const [nav, setNav] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
   const scrollDirection = useScrollDirection();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
 
-  const isHomePage =
-    pathname === '/pt' || pathname === '/en' || pathname === '/';
-
-  const handleLanguageChange = (lang) => {
-    trackEvent('language_change', {
-      language: lang,
-      previous_language: currentLanguage,
-      location: pathname,
-    });
-    changeLanguage(lang);
-    if (isHomePage || hideNav) {
-      router.push(`/${lang}${hideNav ? '/account' : ''}`);
-    }
-  };
-
-  const handleNavClick = (label, target) => {
-    trackEvent('nav_click', {
-      nav_label: label,
-      nav_target: target,
-      location: pathname,
-    });
-  };
-
-  const navItems = [
-    { id: 1, text: t('navbar.home'), to: 'home' },
-    { id: 2, text: t('navbar.services'), to: 'services' },
-    { id: 3, text: t('navbar.clients'), to: 'clients' },
-    { id: 4, text: t('navbar.about'), to: 'about' },
-    { id: 5, text: t('navbar.contact'), to: 'contact' },
+  const language = currentLanguage === 'en' ? 'en' : 'pt';
+  const home = `/${language}`;
+  const recruitmentHref =
+    language === 'en' ? '/en/recruitment' : '/pt/recrutamento';
+  const links = [
+    [t('navbar.home'), home],
+    [t('navbar.services'), `${home}#services`],
+    [t('navbar.clients'), `${home}#clients`],
+    [t('navbar.about'), `${home}#about`],
+    [t('navbar.contact'), `${home}#contact`],
   ];
 
-  const logoEl =
-    hideNav || !isHomePage ? (
-      <button onClick={() => router.push(`/${currentLanguage}`)}>
-        <Logo className='ml-4 lg:ml-12 w-10 mb-2 lg:mb-0 lg:w-14 cursor-pointer' />
-      </button>
-    ) : (
-      <Link
-        to='home'
-        smooth={true}
-        duration={800}
-        easing='easeInOutQuart'
-        onClick={() => setNav(false)}
-      >
-        <Logo className='ml-4 lg:ml-12 w-10 mb-2 lg:mb-0 lg:w-14 cursor-pointer' />
-      </Link>
-    );
+  const changeSiteLanguage = (nextLanguage) => {
+    trackEvent('language_change', {
+      language: nextLanguage,
+      previous_language: language,
+      location: pathname,
+    });
+    changeLanguage(nextLanguage);
+    const recruitmentPaths = new Set([
+      '/recrutamento',
+      '/pt/recrutamento',
+      '/pt/recruitment',
+      '/en/recruitment',
+      '/en/recrutamento',
+    ]);
+    if (recruitmentPaths.has(pathname)) {
+      router.push(
+        nextLanguage === 'en' ? '/en/recruitment' : '/pt/recrutamento',
+      );
+      setMenuOpen(false);
+      return;
+    }
+    const localizedPath = /^\/(pt|en)(\/|$)/.test(pathname)
+      ? pathname.replace(/^\/(pt|en)/, `/${nextLanguage}`)
+      : `/${nextLanguage}`;
+    router.push(localizedPath);
+    setMenuOpen(false);
+  };
 
   return (
-    <div
-      className={`bg-black flex justify-between items-center h-16 lg:h-24 w-screen mx-auto px-4 text-white fixed z-50 transition-all duration-300 ${
-        scrollDirection === 'down' ? '-top-24' : 'top-0'
-      }`}
-    >
-      {logoEl}
-
-      {/* Desktop Navigation */}
-      <ul className='hidden md:flex items-center lg:mr-8'>
-        {!hideNav &&
-          navItems.map((item) =>
-            isHomePage ? (
-              <li key={item.id}>
-                <Link
-                  to={item.to}
-                  smooth={true}
-                  duration={800}
-                  easing='easeInOutQuart'
-                  onClick={() => handleNavClick(item.text, item.to)}
-                  className='p-4 hover:bg-purple-primary rounded-xl m-2 cursor-pointer duration-300 hover:text-black'
-                >
-                  {item.text}
-                </Link>
-              </li>
-            ) : (
-              <li key={item.id}>
-                <a
-                  href={`/${currentLanguage}`}
-                  onClick={() => handleNavClick(item.text, item.to)}
-                  className='p-4 hover:bg-purple-primary rounded-xl m-2 cursor-pointer duration-300 hover:text-black block'
-                >
-                  {item.text}
-                </a>
-              </li>
-            ),
-          )}
-        <li>
-          <NextLink
-            href='/recrutamento'
-            onClick={() =>
-              handleNavClick(t('navbar.recrutamento'), '/recrutamento')
-            }
-            className='p-4 hover:bg-purple-primary rounded-xl m-2 cursor-pointer duration-300 hover:text-black block'
-          >
-            {t('navbar.recrutamento')}
-          </NextLink>
-        </li>
-        <button
-          onClick={() => handleLanguageChange('pt')}
-          className='fi fi-br h-[32px] cursor-pointer ml-8 lg:mr-2'
-        ></button>
-        <button
-          onClick={() => handleLanguageChange('en')}
-          className='fi fi-us h-[32px] ml-4 mr-4 cursor-pointer'
-        ></button>
-        {session ? (
-          <>
-            <button
-              onClick={() =>
-                hideNav
-                  ? router.push(`/${currentLanguage}`)
-                  : router.push(`/${currentLanguage}/account`)
-              }
-              className='ml-4 px-4 py-2 border border-purple-primary text-purple-primary hover:bg-purple-primary hover:text-white rounded-lg transition-colors duration-300 cursor-pointer font-medium'
-            >
-              {hideNav ? t('navbar.homePage') : t('navbar.myAccount')}
-            </button>
-            <button
-              onClick={() => signOut()}
-              className='ml-2 px-4 py-2 border border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-colors duration-300 cursor-pointer font-medium'
-            >
-              {t('navbar.logout')}
-            </button>
-          </>
-        ) : (
-          <button
-            onClick={() => setLoginOpen(true)}
-            className='ml-4 px-4 py-2 border border-purple-primary text-purple-primary hover:bg-purple-primary hover:text-white rounded-lg transition-colors duration-300 cursor-pointer font-medium'
-          >
-            {t('navbar.login')}
-          </button>
-        )}
-      </ul>
-
-      {/* Mobile Navigation Icon */}
-      <div className='block md:hidden'>
-        <AnimatedHamburgerButton active={nav} setActive={setNav} />
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <ul
-        className={`fixed md:hidden top-16 left-0 w-full h-auto border-r border-r-gray-900 bg-[#000300] z-10 transition-opacity duration-800 ${
-          nav ? 'opacity-100 visible' : 'opacity-0 invisible'
+    <>
+      <header
+        className={`fixed inset-x-0 top-[18px] z-[80] mx-auto flex min-h-[68px] w-[calc(100%-48px)] max-w-[1180px] items-center justify-between rounded-full border border-brand-line/90 bg-brand-paper/95 px-5 shadow-[0_16px_50px_rgba(23,19,27,0.1)] backdrop-blur-xl transition-transform duration-300 md:px-7 ${
+          scrollDirection === 'down' ? '-translate-y-[110px]' : ''
         }`}
       >
-        {/* Mobile Navigation Items */}
-        {!hideNav &&
-          navItems.map((item) =>
-            isHomePage ? (
-              <li key={item.id}>
-                <Link
-                  to={item.to}
-                  smooth={true}
-                  duration={800}
-                  easing='easeInOutQuart'
-                  className='block p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600'
-                  onClick={() => {
-                    handleNavClick(item.text, item.to);
-                    setNav(false);
-                  }}
-                >
-                  {item.text}
-                </Link>
-              </li>
-            ) : (
-              <li key={item.id}>
-                <a
-                  href={`/${currentLanguage}`}
-                  className='block p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600'
-                  onClick={() => {
-                    handleNavClick(item.text, item.to);
-                    setNav(false);
-                  }}
-                >
-                  {item.text}
-                </a>
-              </li>
-            ),
-          )}
-        <li>
-          <NextLink
-            href='/recrutamento'
-            className='block p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600'
-            onClick={() => {
-              handleNavClick(t('navbar.recrutamento'), '/recrutamento');
-              setNav(false);
-            }}
-          >
+        <Link
+          href={home}
+          className='flex shrink-0 items-center gap-3 text-brand-ink'
+          aria-label='Nevada Consulting'
+        >
+          <span className='flex h-9 w-9 items-center justify-center text-purple-primary [&_svg]:h-full [&_svg]:w-full'>
+            <Logo />
+          </span>
+          <span className='text-[15px] font-black uppercase leading-none tracking-[-0.03em]'>
+            Nevada
+            <small className='mt-1 block text-[8px] font-bold tracking-[0.22em] text-purple-primary'>
+              Consulting
+            </small>
+          </span>
+        </Link>
+
+        <nav
+          className={`${
+            menuOpen ? 'flex' : 'hidden'
+          } absolute left-0 right-0 top-[78px] flex-col items-stretch gap-1 rounded-3xl border border-brand-line bg-brand-paper p-4 shadow-xl min-[1100px]:static min-[1100px]:flex min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:gap-3 min-[1100px]:border-0 min-[1100px]:bg-transparent min-[1100px]:p-0 min-[1100px]:shadow-none [&>a]:whitespace-nowrap [&>a]:rounded-full [&>a]:px-2.5 [&>a]:py-2 [&>a]:text-xs [&>a]:font-bold [&>a]:uppercase [&>a]:tracking-[0.08em] [&>a]:text-brand-muted [&>a]:transition-colors hover:[&>a]:text-brand-violet`}
+        >
+          {links.map(([label, href]) => (
+            <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
+              {label}
+            </Link>
+          ))}
+          <Link href={recruitmentHref} onClick={() => setMenuOpen(false)}>
             {t('navbar.recrutamento')}
-          </NextLink>
-        </li>
-        {session ? (
-          <>
-            <li>
+          </Link>
+
+          <div
+            className='flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold text-brand-muted [&_button]:transition-colors hover:[&_button]:text-brand-violet'
+            aria-label='Language'
+          >
+            <button
+              className={language === 'pt' ? 'text-brand-violet' : ''}
+              onClick={() => changeSiteLanguage('pt')}
+            >
+              PT
+            </button>
+            <span>/</span>
+            <button
+              className={language === 'en' ? 'text-brand-violet' : ''}
+              onClick={() => changeSiteLanguage('en')}
+            >
+              EN
+            </button>
+          </div>
+
+          {session ? (
+            <>
+              <Link className='!text-brand-violet' href={`${home}/account`}>
+                {t('navbar.myAccount')}
+              </Link>
               <button
-                onClick={() => {
-                  hideNav
-                    ? router.push(`/${currentLanguage}`)
-                    : router.push(`/${currentLanguage}/account`);
-                  setNav(false);
-                }}
-                className='block w-full text-left p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600'
-              >
-                {hideNav ? t('navbar.homePage') : t('navbar.myAccount')}
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => {
-                  signOut();
-                  setNav(false);
-                }}
-                className='block w-full text-left p-4 pl-8 border-b rounded-xl hover:bg-red-500 duration-300 hover:text-white cursor-pointer border-gray-600'
+                className='rounded-full px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-brand-muted transition-colors hover:text-brand-violet'
+                onClick={() => signOut()}
               >
                 {t('navbar.logout')}
               </button>
-            </li>
-          </>
-        ) : (
-          <li>
+            </>
+          ) : (
             <button
+              className='flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-brand-ink px-5 text-xs font-bold uppercase tracking-[0.08em] text-white transition hover:bg-brand-violet'
               onClick={() => {
                 setLoginOpen(true);
-                setNav(false);
+                setMenuOpen(false);
               }}
-              className='block w-full text-left p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600'
             >
               {t('navbar.login')}
+              <FiArrowUpRight className='shrink-0' />
             </button>
-          </li>
-        )}
-        <div className='p-4 pl-8 border-b rounded-xl hover:bg-purple-primary duration-300 hover:text-black cursor-pointer border-gray-600 flex items-center'>
-          <p>{t('navbar.language')}</p>
-          <button
-            onClick={() => handleLanguageChange('pt')}
-            className='fi fi-br h-[32px] cursor-pointer ml-5 lg:ml-8'
-            style={{ width: '28px' }}
-          ></button>
-          <button
-            onClick={() => handleLanguageChange('en')}
-            className='fi fi-us h-[32px] ml-5 lg:ml-4 mr-4 cursor-pointer'
-            style={{ width: '28px' }}
-          ></button>
-        </div>
-      </ul>
+          )}
+        </nav>
+
+        <button
+          className='flex h-10 w-10 items-center justify-center rounded-full border border-brand-line text-xl text-brand-ink min-[1100px]:hidden'
+          onClick={() => setMenuOpen((open) => !open)}
+          aria-label='Toggle menu'
+          aria-expanded={menuOpen}
+        >
+          {menuOpen ? <FiX /> : <FiMenu />}
+        </button>
+      </header>
       <LoginModal isOpen={loginOpen} onClose={() => setLoginOpen(false)} />
-    </div>
+    </>
   );
 };
 

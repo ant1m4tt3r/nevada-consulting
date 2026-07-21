@@ -7,6 +7,10 @@ import { Resend } from 'resend';
 import { getCalendarClient } from '../../../../lib/googleCalendar.js';
 import Navbar from '../../../../components/client/Navbar';
 
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
 const TZ = 'America/Sao_Paulo';
 
 const i18n = {
@@ -35,7 +39,9 @@ const i18n = {
 };
 
 export default async function BookingSuccessPage({ params, searchParams }) {
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = process.env.RESEND_API_KEY
+    ? new Resend(process.env.RESEND_API_KEY)
+    : null;
   const { lang } = await params;
   const { payment_id, status, external_reference } = await searchParams;
   const t = i18n[lang] ?? i18n.pt;
@@ -122,7 +128,7 @@ export default async function BookingSuccessPage({ params, searchParams }) {
 
           // Enviar email de confirmação
           try {
-            await resend.emails.send({
+            await resend?.emails.send({
               from: 'Nevada Consulting <noreply@nevadaconsulting.com.br>',
               to: userEmail,
               subject: 'Confirmação de agendamento — Nevada Consulting',
@@ -152,32 +158,40 @@ export default async function BookingSuccessPage({ params, searchParams }) {
   return (
     <>
       <Navbar hideNav />
-      <main className='min-h-screen bg-[#0e0e0e] text-white flex items-center justify-center px-6'>
-        <div className='max-w-md w-full text-center'>
-          <div className='w-20 h-20 rounded-full bg-purple-primary/20 flex items-center justify-center mx-auto mb-8'>
-            <span className='text-4xl text-purple-primary'>
-              {isApproved ? '✓' : '⏳'}
-            </span>
+      <main className='flex min-h-screen items-center justify-center bg-brand-cream px-5 py-32 text-brand-ink'>
+        <div className='w-full max-w-xl rounded-[32px] border border-brand-line bg-brand-paper p-8 text-center shadow-[0_24px_80px_rgba(23,19,27,0.12)] md:p-12'>
+          <div
+            className={`mx-auto flex h-16 w-16 items-center justify-center rounded-full text-2xl font-black ${
+              isApproved
+                ? 'bg-emerald-100 text-emerald-700'
+                : 'bg-amber-100 text-amber-700'
+            }`}
+          >
+            <span>{isApproved ? '✓' : '⏳'}</span>
           </div>
 
-          <h1 className='text-3xl font-bold mb-3'>
+          <h1 className='mt-7 text-4xl font-black tracking-[-0.04em] md:text-5xl'>
             {isApproved ? t.title : t.titlePending}
           </h1>
-          <p className='text-gray-400 mb-8'>
+          <p className='mx-auto mt-4 max-w-md text-base leading-relaxed text-brand-muted'>
             {isApproved ? t.subtitle : t.subtitlePending}
           </p>
 
           {(serviceName || formattedDate) && (
-            <div className='bg-[#1a1a1a] border border-gray-800 rounded-xl p-6 mb-8 text-left'>
+            <div className='mt-8 divide-y divide-brand-line rounded-2xl border border-brand-line bg-brand-cream px-5 text-left'>
               {serviceName && (
-                <p className='text-gray-400 text-sm'>
-                  <span className='text-white font-semibold'>{t.service}:</span>{' '}
+                <p className='py-4 font-semibold'>
+                  <span className='mb-1 block text-[10px] font-black uppercase tracking-[0.12em] text-brand-muted'>
+                    {t.service}
+                  </span>
                   {serviceName}
                 </p>
               )}
               {formattedDate && isApproved && (
-                <p className='text-gray-400 text-sm mt-2'>
-                  <span className='text-white font-semibold'>{t.date}:</span>{' '}
+                <p className='py-4 font-semibold'>
+                  <span className='mb-1 block text-[10px] font-black uppercase tracking-[0.12em] text-brand-muted'>
+                    {t.date}
+                  </span>
                   {formattedDate}
                 </p>
               )}
@@ -185,13 +199,12 @@ export default async function BookingSuccessPage({ params, searchParams }) {
           )}
 
           {isApproved && (
-            <p className='text-gray-500 text-sm mb-8'>{t.email}</p>
+            <p className='mt-6 text-sm text-brand-muted'>{t.email}</p>
           )}
 
           <Link
             href={`/${lang}`}
-            className='inline-block bg-purple-primary hover:bg-purple-700 text-white font-semibold
-              px-8 py-3 rounded-lg transition-colors duration-300'
+            className='mt-8 inline-flex min-h-12 items-center justify-center rounded-full bg-brand-ink px-7 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-brand-violet'
           >
             {t.home}
           </Link>
