@@ -198,7 +198,7 @@
         "body": "Nevada finds and selects technology professionals who understand more than the stack: they understand product, customers and growth.",
         "primary": "Hire better talent",
         "secondary": "See our method",
-        "footnote": "Global recruiting · Success fee model · Initial-period guarantee"
+        "footnote": "Technology at the core · Senior searches in strategic functions · Success fee model"
       },
       "visual": {
         "label": "Role scorecard",
@@ -387,7 +387,7 @@
         "btnWA": "Talk to us on WhatsApp"
       },
       "visual": {
-        "eyebrow": "Senior recruitment, from briefing to acceptance",
+        "eyebrow": "Technology at the core. Senior recruitment for critical decisions.",
         "searchLabel": "Strategic search",
         "active": "In progress",
         "role": "Critical position",
@@ -454,16 +454,27 @@
         ]
       },
       "especialidades": {
-        "title": "Areas we work in",
+        "title": "Technology at the core. Expertise for strategic decisions.",
         "areas": [
-          "Technology",
-          "Advertising",
-          "Marketing",
-          "Leadership",
-          "Healthcare",
-          "Fintechs",
-          "Corporate",
-          "Construction"
+          {
+            "title": "Technology",
+            "detail": "Engineering, product, data and technical leadership",
+            "label": "Specialty",
+            "featured": true
+          },
+          {
+            "title": "Advertising",
+            "detail": "Agencies, creative and strategy"
+          },
+          { "title": "Marketing", "detail": "Brand, growth and performance" },
+          { "title": "Leadership", "detail": "Senior executives and managers" },
+          { "title": "Healthcare", "detail": "Operations and strategic roles" },
+          { "title": "Fintechs", "detail": "Business, product and operations" },
+          { "title": "Corporate", "detail": "Key functions for scale" },
+          {
+            "title": "Construction",
+            "detail": "Business leaders and specialists"
+          }
         ]
       },
       "juliana": {

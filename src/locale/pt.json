@@ -208,7 +208,7 @@
         "body": "A Nevada encontra e seleciona profissionais de tecnologia que entendem mais do que a stack: entendem produto, cliente e crescimento.",
         "primary": "Quero contratar melhor",
         "secondary": "Conheça o método",
-        "footnote": "Recrutamento global · Modelo success fee · Garantia no período inicial"
+        "footnote": "Tecnologia no centro · Buscas seniores em áreas estratégicas · Modelo success fee"
       },
       "visual": {
         "label": "Scorecard da posição",
@@ -397,7 +397,7 @@
         "btnWA": "Fale conosco no WhatsApp"
       },
       "visual": {
-        "eyebrow": "Recrutamento sênior, do briefing ao aceite",
+        "eyebrow": "Tecnologia no centro. Recrutamento sênior para decisões críticas.",
         "searchLabel": "Busca estratégica",
         "active": "Em andamento",
         "role": "Posição crítica",
@@ -464,16 +464,30 @@
         ]
       },
       "especialidades": {
-        "title": "Áreas que atuamos",
+        "title": "Tecnologia no centro. Especialidades para decisões estratégicas.",
         "areas": [
-          "Tecnologia",
-          "Publicidade",
-          "Marketing",
-          "Liderança",
-          "Saúde",
-          "Fintechs",
-          "Corporativo",
-          "Construção Civil"
+          {
+            "title": "Tecnologia",
+            "detail": "Engenharia, produto, dados e liderança técnica",
+            "label": "Especialidade",
+            "featured": true
+          },
+          {
+            "title": "Publicidade",
+            "detail": "Agências, criação e estratégia"
+          },
+          {
+            "title": "Marketing",
+            "detail": "Marca, crescimento e performance"
+          },
+          { "title": "Liderança", "detail": "Executivos e gestores seniores" },
+          { "title": "Saúde", "detail": "Operações e posições estratégicas" },
+          { "title": "Fintechs", "detail": "Negócio, produto e operações" },
+          { "title": "Corporativo", "detail": "Funções-chave para escalar" },
+          {
+            "title": "Construção Civil",
+            "detail": "Gestão e especialistas de negócio"
+          }
         ]
       },
       "juliana": {

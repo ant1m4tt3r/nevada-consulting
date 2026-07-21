@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { FiArrowUpRight, FiMenu, FiX } from 'react-icons/fi';
@@ -15,10 +15,9 @@ import LoginModal from './LoginModal.jsx';
 
 const Navbar = () => {
   const { t } = useTranslation();
-  const { changeLanguage, currentLanguage } = useLanguage();
+  const { currentLanguage } = useLanguage();
   const { data: session } = useSession();
   const pathname = usePathname();
-  const router = useRouter();
   const scrollDirection = useScrollDirection();
   const [menuOpen, setMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -35,13 +34,7 @@ const Navbar = () => {
     [t('navbar.contact'), `${home}#contact`],
   ];
 
-  const changeSiteLanguage = (nextLanguage) => {
-    trackEvent('language_change', {
-      language: nextLanguage,
-      previous_language: language,
-      location: pathname,
-    });
-    changeLanguage(nextLanguage);
+  const getLocalizedPath = (nextLanguage) => {
     const recruitmentPaths = new Set([
       '/recrutamento',
       '/pt/recrutamento',
@@ -49,17 +42,22 @@ const Navbar = () => {
       '/en/recruitment',
       '/en/recrutamento',
     ]);
+
     if (recruitmentPaths.has(pathname)) {
-      router.push(
-        nextLanguage === 'en' ? '/en/recruitment' : '/pt/recrutamento',
-      );
-      setMenuOpen(false);
-      return;
+      return nextLanguage === 'en' ? '/en/recruitment' : '/pt/recrutamento';
     }
-    const localizedPath = /^\/(pt|en)(\/|$)/.test(pathname)
+
+    return /^\/(pt|en)(\/|$)/.test(pathname)
       ? pathname.replace(/^\/(pt|en)/, `/${nextLanguage}`)
       : `/${nextLanguage}`;
-    router.push(localizedPath);
+  };
+
+  const handleLanguageChange = (nextLanguage) => {
+    trackEvent('language_change', {
+      language: nextLanguage,
+      previous_language: language,
+      location: pathname,
+    });
     setMenuOpen(false);
   };
 
@@ -101,22 +99,27 @@ const Navbar = () => {
           </Link>
 
           <div
-            className='flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold text-brand-muted [&_button]:transition-colors hover:[&_button]:text-brand-violet'
+            className='flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold text-brand-muted [&_a]:transition-colors hover:[&_a]:text-brand-violet'
             aria-label='Language'
           >
-            <button
+            {/* Native links keep locale changes reliable before client hydration. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
+              href={getLocalizedPath('pt')}
               className={language === 'pt' ? 'text-brand-violet' : ''}
-              onClick={() => changeSiteLanguage('pt')}
+              onClick={() => handleLanguageChange('pt')}
             >
               PT
-            </button>
+            </a>
             <span>/</span>
-            <button
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a
+              href={getLocalizedPath('en')}
               className={language === 'en' ? 'text-brand-violet' : ''}
-              onClick={() => changeSiteLanguage('en')}
+              onClick={() => handleLanguageChange('en')}
             >
               EN
-            </button>
+            </a>
           </div>
 
           {session ? (

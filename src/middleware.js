@@ -21,22 +21,13 @@ export function middleware(request) {
     return NextResponse.redirect(redirectUrl, 308);
   }
 
-  const language = pathname.split('/').filter(Boolean)[0];
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set(
-    'x-site-language',
-    ['pt', 'en'].includes(language) ? language : 'pt',
-  );
-
   if (pathname === '/en/recruitment') {
     const rewriteUrl = request.nextUrl.clone();
     rewriteUrl.pathname = '/en/recrutamento';
-    return NextResponse.rewrite(rewriteUrl, {
-      request: { headers: requestHeaders },
-    });
+    return NextResponse.rewrite(rewriteUrl);
   }
 
-  return NextResponse.next({ request: { headers: requestHeaders } });
+  return NextResponse.next();
 }
 
 export const config = {

@@ -121,18 +121,44 @@ export default function RecruitmentExpertise() {
               {t('recrutamento.visual.areasBody')}
             </p>
           </div>
-          <div className='mt-14 grid grid-cols-2 gap-3 md:grid-cols-4'>
+          <div className='mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
             {areas.map((area, index) => {
               const Icon = areaIcons[index];
               return (
                 <article
-                  className='flex min-h-[150px] flex-col justify-between rounded-3xl border border-brand-line bg-brand-cream p-5 transition-[border-color,box-shadow] hover:border-brand-violet/35 hover:shadow-[0_16px_40px_rgba(23,19,27,0.07)] md:min-h-[180px] md:p-6'
-                  key={area}
+                  className={`flex min-h-[150px] flex-col justify-between rounded-3xl border p-5 transition-[border-color,box-shadow] hover:shadow-[0_16px_40px_rgba(23,19,27,0.07)] md:min-h-[180px] md:p-6 ${
+                    area.featured
+                      ? 'min-h-[220px] border-brand-violet bg-brand-ink text-white hover:border-brand-lilac sm:col-span-2'
+                      : 'border-brand-line bg-brand-cream hover:border-brand-violet/35'
+                  }`}
+                  key={area.title}
                 >
-                  <Icon className='h-8 w-8 text-brand-violet' />
-                  <strong className='text-sm font-black uppercase tracking-[0.06em] text-brand-ink'>
-                    {area}
-                  </strong>
+                  <Icon
+                    className={`h-8 w-8 ${
+                      area.featured ? 'text-brand-mint' : 'text-brand-violet'
+                    }`}
+                  />
+                  <div>
+                    {area.featured ? (
+                      <span className='mb-2 block text-[10px] font-black uppercase tracking-[0.16em] text-brand-lilac'>
+                        {area.label}
+                      </span>
+                    ) : null}
+                    <strong
+                      className={`block text-sm font-black uppercase tracking-[0.06em] ${
+                        area.featured ? 'text-white' : 'text-brand-ink'
+                      }`}
+                    >
+                      {area.title}
+                    </strong>
+                    <span
+                      className={`mt-1 block text-xs leading-relaxed ${
+                        area.featured ? 'text-white/65' : 'text-brand-muted'
+                      }`}
+                    >
+                      {area.detail}
+                    </span>
+                  </div>
                 </article>
               );
             })}

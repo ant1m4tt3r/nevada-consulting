@@ -49,7 +49,7 @@ export default function HomeFooter() {
             rel='noreferrer'
             aria-label='LinkedIn'
           >
-            <FiLinkedin />
+            <FiLinkedin aria-hidden='true' />
           </a>
           <a
             href={whatsappHref}
@@ -57,7 +57,7 @@ export default function HomeFooter() {
             rel='noreferrer'
             aria-label='WhatsApp'
           >
-            <SiWhatsapp />
+            <SiWhatsapp aria-hidden='true' />
           </a>
         </div>
       </div>

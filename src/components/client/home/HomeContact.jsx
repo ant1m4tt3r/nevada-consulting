@@ -14,7 +14,7 @@ export default function HomeContact() {
       <div className='mx-auto grid w-[calc(100%-40px)] max-w-[1180px] gap-10 rounded-[32px] bg-brand-violet p-8 text-white shadow-[0_24px_80px_rgba(98,48,109,0.24)] md:p-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-14'>
         <div>
           <div className='mb-8 flex h-14 w-14 items-center justify-center rounded-full border border-white/20 bg-white/10 text-2xl'>
-            <FiMessageSquare />
+            <FiMessageSquare aria-hidden='true' />
           </div>
           <div className='mb-5 text-[11px] font-black uppercase tracking-[0.18em] text-brand-lilac'>
             {t('home.contact.eyebrow')}
@@ -32,15 +32,15 @@ export default function HomeContact() {
               target='_blank'
               rel='noreferrer'
             >
-              <SiWhatsapp />
+              <SiWhatsapp aria-hidden='true' />
               {t('home.contact.whatsapp')}
-              <FiArrowUpRight />
+              <FiArrowUpRight aria-hidden='true' />
             </a>
             <a
               className='inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 px-5 text-xs font-bold text-white transition hover:border-white hover:bg-white/10'
               href='mailto:contato@nevadaconsulting.com.br'
             >
-              <FiMail />
+              <FiMail aria-hidden='true' />
               {t('home.contact.email')}
             </a>
           </div>

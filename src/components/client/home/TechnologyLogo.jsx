@@ -15,6 +15,7 @@ export default function TechnologyLogo({ technology }) {
         technology === 'Go' ? 'w-11' : 'w-9'
       }`}
       title={technology}
+      role='img'
       aria-label={`${technology} logo`}
     >
       {technology === 'Python' ? (

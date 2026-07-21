@@ -262,10 +262,10 @@ function PackageHeader({ name, price, subtitle, tagline }) {
 }
 
 export async function generateStaticParams() {
-  const slugs = Object.keys(slugToKey);
-  const langs = ['pt', 'en'];
-  return langs.flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
+  return Object.keys(slugToKey).map((slug) => ({ slug }));
 }
+
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;

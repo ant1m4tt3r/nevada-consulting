@@ -9,10 +9,6 @@ import {
   recruitmentSeo,
 } from '../../../lib/seo';
 
-export function generateStaticParams() {
-  return [{ lang: 'pt' }, { lang: 'en' }];
-}
-
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const language = lang === 'en' ? 'en' : 'pt';

@@ -1,6 +1,6 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import { GoogleTagManager } from '@next/third-parties/google';
-import { headers } from 'next/headers';
+import Script from 'next/script';
 import './globals.css';
 import Providers from '../providers/Providers';
 import { SITE_URL } from '../lib/seo';
@@ -71,14 +71,16 @@ export const metadata = {
     : {}),
 };
 
-export default async function RootLayout({ children }) {
+export default function RootLayout({ children }) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  const requestHeaders = await headers();
-  const language =
-    requestHeaders.get('x-site-language') === 'en' ? 'en' : 'pt-BR';
 
   return (
-    <html lang={language}>
+    <html lang='pt-BR'>
+      <head>
+        <Script id='home-scroll-restoration' strategy='beforeInteractive'>
+          {`if (/^\\/(pt|en)?\\/?$/.test(window.location.pathname) && !window.location.hash) { window.history.scrollRestoration = 'manual'; window.scrollTo(0, 0); }`}
+        </Script>
+      </head>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body className={jakartaSans.className}>
         <Providers>{children}</Providers>
