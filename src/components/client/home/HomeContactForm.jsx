@@ -1,13 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FiArrowUpRight, FiCheckCircle } from 'react-icons/fi';
 
 const initialForm = { name: '', email: '', message: '' };
 
-export default function HomeContactForm() {
-  const { t } = useTranslation();
+export default function HomeContactForm({ copy }) {
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState('idle');
 
@@ -49,7 +47,7 @@ export default function HomeContactForm() {
     >
       <div className='grid gap-3 sm:grid-cols-2'>
         <label className='sr-only' htmlFor='contact-name'>
-          {t('contact.name')}
+          {copy.name}
         </label>
         <input
           className={inputClassName}
@@ -58,13 +56,13 @@ export default function HomeContactForm() {
           type='text'
           autoComplete='name'
           maxLength={100}
-          placeholder={t('contact.name')}
+          placeholder={copy.name}
           value={form.name}
           onChange={updateField}
           required
         />
         <label className='sr-only' htmlFor='contact-email'>
-          {t('contact.email')}
+          {copy.email}
         </label>
         <input
           className={inputClassName}
@@ -73,21 +71,21 @@ export default function HomeContactForm() {
           type='email'
           autoComplete='email'
           maxLength={160}
-          placeholder={t('contact.email')}
+          placeholder={copy.email}
           value={form.email}
           onChange={updateField}
           required
         />
       </div>
       <label className='sr-only' htmlFor='contact-message'>
-        {t('contact.message')}
+        {copy.message}
       </label>
       <textarea
         className={`${inputClassName} mt-3 min-h-32 resize-y`}
         id='contact-message'
         name='message'
         maxLength={4000}
-        placeholder={t('contact.message')}
+        placeholder={copy.message}
         value={form.message}
         onChange={updateField}
         required
@@ -99,7 +97,7 @@ export default function HomeContactForm() {
           type='submit'
           disabled={status === 'loading'}
         >
-          {status === 'loading' ? t('home.contact.sending') : t('contact.send')}
+          {status === 'loading' ? copy.sending : copy.send}
           <FiArrowUpRight />
         </button>
 
@@ -107,10 +105,10 @@ export default function HomeContactForm() {
           {status === 'success' ? (
             <span className='flex items-center gap-2 text-brand-mint'>
               <FiCheckCircle />
-              {t('contact.thankYouMessage')}
+              {copy.success}
             </span>
           ) : null}
-          {status === 'error' ? t('home.contact.error') : null}
+          {status === 'error' ? copy.error : null}
         </div>
       </div>
     </form>

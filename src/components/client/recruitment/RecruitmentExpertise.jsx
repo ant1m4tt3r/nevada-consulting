@@ -1,18 +1,17 @@
 'use client';
 
+import { useTranslation } from 'react-i18next';
 import {
   FiBriefcase,
   FiCode,
   FiDollarSign,
   FiHeart,
-  FiHome,
   FiRadio,
   FiTarget,
   FiUsers,
   FiX,
   FiCheck,
 } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
 
 const areaIcons = [
   FiCode,
@@ -22,7 +21,6 @@ const areaIcons = [
   FiHeart,
   FiDollarSign,
   FiBriefcase,
-  FiHome,
 ];
 
 function ComparisonColumn({ heading, items, positive }) {
@@ -75,15 +73,10 @@ function ComparisonColumn({ heading, items, positive }) {
 
 export default function RecruitmentExpertise() {
   const { t } = useTranslation();
-  const negative = t('recrutamento.diferenciais.negative', {
-    returnObjects: true,
-  });
-  const positive = t('recrutamento.diferenciais.positive', {
-    returnObjects: true,
-  });
-  const areas = t('recrutamento.especialidades.areas', {
-    returnObjects: true,
-  });
+  const copy = t('recrutamento', { returnObjects: true });
+  const negative = copy.diferenciais.negative;
+  const positive = copy.diferenciais.positive;
+  const areas = copy.especialidades.areas;
 
   return (
     <>
@@ -94,16 +87,16 @@ export default function RecruitmentExpertise() {
               Nevada Consulting
             </div>
             <h2 className='text-4xl font-black leading-none tracking-[-0.055em] md:text-6xl'>
-              {t('recrutamento.diferenciais.title')}
+              {copy.diferenciais.title}
             </h2>
           </div>
           <div className='mt-14 grid items-start gap-5 lg:grid-cols-2'>
             <ComparisonColumn
-              heading={t('recrutamento.diferenciais.negativeHeader')}
+              heading={copy.diferenciais.negativeHeader}
               items={negative}
             />
             <ComparisonColumn
-              heading={t('recrutamento.diferenciais.positiveHeader')}
+              heading={copy.diferenciais.positiveHeader}
               items={positive}
               positive
             />
@@ -115,10 +108,10 @@ export default function RecruitmentExpertise() {
         <div className='mx-auto w-[calc(100%-40px)] max-w-[1180px]'>
           <div className='grid items-end gap-8 md:grid-cols-[1fr_0.45fr]'>
             <h2 className='max-w-3xl text-4xl font-black leading-none tracking-[-0.055em] md:text-6xl'>
-              {t('recrutamento.especialidades.title')}
+              {copy.especialidades.title}
             </h2>
             <p className='text-sm leading-relaxed text-brand-muted'>
-              {t('recrutamento.visual.areasBody')}
+              {copy.visual.areasBody}
             </p>
           </div>
           <div className='mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>

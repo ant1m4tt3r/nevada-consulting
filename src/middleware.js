@@ -27,9 +27,35 @@ export function middleware(request) {
     return NextResponse.rewrite(rewriteUrl);
   }
 
+  if (pathname === '/pt/services/high-performance-team') {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/pt/recrutamento';
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  if (pathname === '/en/services/high-performance-team') {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/en/recruitment';
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  if (pathname === '/en/candidatos') {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/en/candidates';
+    return NextResponse.redirect(redirectUrl, 308);
+  }
+
+  if (pathname === '/en/candidates') {
+    const rewriteUrl = request.nextUrl.clone();
+    rewriteUrl.pathname = '/en/candidatos';
+    return NextResponse.rewrite(rewriteUrl);
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|logo.ico|og.png|og-en.png).*)'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|logo.ico|og.png|og-en.png|og-tech.png|og-tech-en.png|og-candidates.png|og-candidates-en.png).*)',
+  ],
 };

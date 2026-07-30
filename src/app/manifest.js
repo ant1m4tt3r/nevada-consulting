@@ -3,7 +3,7 @@ export default function manifest() {
     name: 'Nevada Consulting',
     short_name: 'Nevada',
     description:
-      'Global tech recruiting and talent strategy for technology companies.',
+      'Senior recruitment and talent strategy across technology and strategic business functions.',
     start_url: '/pt',
     display: 'standalone',
     background_color: '#f8f6f2',

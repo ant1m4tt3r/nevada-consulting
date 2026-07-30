@@ -40,7 +40,11 @@ export default async function BookingCancelPage({ params }) {
           </p>
 
           <Link
-            href={`/${lang}#services`}
+            href={
+              lang === 'en'
+                ? '/en/candidates#candidate-services'
+                : '/pt/candidatos#candidate-services'
+            }
             className='mt-8 inline-flex min-h-12 items-center justify-center rounded-full border border-brand-line bg-brand-paper px-7 text-sm font-bold text-brand-ink transition hover:-translate-y-0.5 hover:border-purple-primary hover:text-brand-violet'
           >
             {t.back}

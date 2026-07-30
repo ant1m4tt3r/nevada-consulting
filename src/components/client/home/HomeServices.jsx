@@ -10,8 +10,9 @@ const icons = [FiSearch, FiUsers, FiTarget];
 export default function HomeServices() {
   const { t } = useTranslation();
   const { currentLanguage } = useLanguage();
+  const copy = t('home.solutions', { returnObjects: true });
   const language = currentLanguage === 'en' ? 'en' : 'pt';
-  const cards = t('home.solutions.cards', { returnObjects: true });
+  const cards = copy.cards;
 
   return (
     <section className='bg-brand-cream py-20 md:py-28' id='services'>
@@ -19,23 +20,28 @@ export default function HomeServices() {
         <div className='grid items-end gap-8 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.42fr)] md:gap-16'>
           <div>
             <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-violet'>
-              {t('home.solutions.eyebrow')}
+              {copy.eyebrow}
             </div>
             <h2 className='max-w-3xl text-4xl font-black leading-[1] tracking-[-0.055em] md:text-6xl'>
-              {t('home.solutions.title')}
+              {copy.title}
             </h2>
           </div>
           <p className='text-base leading-relaxed text-brand-muted'>
-            {t('home.solutions.body')}
+            {copy.body}
           </p>
         </div>
 
         <div className='mt-14 grid gap-4 md:grid-cols-3'>
           {cards.map((card, index) => {
             const Icon = icons[index];
-            const href = card.slug
-              ? `/${language}/services/${card.slug}`
-              : card.href;
+            const href =
+              card.slug === 'high-performance-team'
+                ? language === 'en'
+                  ? '/en/recruitment'
+                  : '/pt/recrutamento'
+                : card.slug
+                  ? `/${language}/services/${card.slug}`
+                  : card.href;
 
             return (
               <article

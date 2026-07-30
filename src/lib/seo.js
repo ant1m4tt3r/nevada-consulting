@@ -1,5 +1,5 @@
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://nevadaconsulting.com.br'
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.nevadaconsulting.com.br'
 ).replace(/\/$/, '');
 
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
@@ -7,38 +7,54 @@ export const PERSON_ID = `${SITE_URL}/#juliana-carvalho`;
 
 export const homeSeo = {
   pt: {
-    title: 'Recrutamento Tech e Talent Strategy | Nevada Consulting',
+    title: 'Recrutamento Sênior por Success Fee | Nevada Consulting',
     description:
-      'Recrutamento global de profissionais de tecnologia, formação de hiring managers e estratégia de talentos para empresas que buscam transformar código em valor de negócio.',
+      'Recrutamento boutique para posições sêniores e estratégicas em tecnologia, marketing, saúde, fintechs e liderança, com shortlist em 5 dias úteis e garantia de 3 meses.',
     locale: 'pt_BR',
   },
   en: {
-    title: 'Global Tech Recruiting & Talent Strategy | Nevada Consulting',
+    title: 'Senior Recruitment Across Industries | Nevada Consulting',
     description:
-      'Global technology recruiting, hiring manager training and talent strategy for companies seeking engineers who turn code into measurable business value.',
+      'Founder-led boutique recruitment for senior and strategic roles across technology, marketing, healthcare, fintech and leadership, with a 5-day shortlist SLA.',
     locale: 'en_US',
   },
 };
 
-export const recruitmentSeo = {
+export const techRecruitmentSeo = {
   pt: {
     path: '/pt/recrutamento',
-    title:
-      'Recrutamento Sênior Multissetorial por Success Fee | Nevada Consulting',
+    title: 'Recrutamento Tech e Talent Strategy | Nevada Consulting',
     description:
-      'Recrutamento boutique para posições sêniores, lideranças e áreas estratégicas em tecnologia, marketing, saúde, fintechs e outros setores, com avaliação pessoal da fundadora.',
+      'Recrutamento global de profissionais de tecnologia, formação de hiring managers e estratégia de talentos para empresas que buscam transformar código em valor de negócio.',
     locale: 'pt_BR',
-    serviceName: 'Recrutamento sênior multissetorial',
-    serviceType: 'Recrutamento sênior e executivo por success fee',
+    serviceName: 'Recrutamento tech global',
+    serviceType: 'Recrutamento de tecnologia e liderança técnica',
   },
   en: {
     path: '/en/recruitment',
-    title: 'Senior Recruitment Across Industries | Nevada Consulting',
+    title: 'Global Tech Recruiting & Talent Strategy | Nevada Consulting',
     description:
-      'Boutique recruitment for senior, leadership and strategic roles across technology, marketing, healthcare, fintech and other industries, personally led by the founder.',
+      'Global technology recruiting, hiring manager training and talent strategy for companies seeking engineers who turn code into measurable business value.',
     locale: 'en_US',
-    serviceName: 'Senior recruitment across industries',
-    serviceType: 'Success-fee senior and executive recruitment',
+    serviceName: 'Global tech recruiting',
+    serviceType: 'Technology and technical leadership recruitment',
+  },
+};
+
+export const candidateSeo = {
+  pt: {
+    path: '/pt/candidatos',
+    title: 'Consultoria para Candidatos | Nevada Consulting',
+    description:
+      'Consultoria de currículo e LinkedIn, posicionamento para ATS e preparação para entrevistas com uma recrutadora global.',
+    locale: 'pt_BR',
+  },
+  en: {
+    path: '/en/candidates',
+    title: 'Career Consulting for Candidates | Nevada Consulting',
+    description:
+      'Resume and LinkedIn consulting, ATS positioning and interview preparation with an experienced global recruiter.',
+    locale: 'en_US',
   },
 };
 
@@ -54,15 +70,27 @@ export const getLanguageAlternates = (language, path = '') => ({
   },
 });
 
-export const getRecruitmentUrl = (language) =>
-  `${SITE_URL}${recruitmentSeo[language === 'en' ? 'en' : 'pt'].path}`;
+export const getTechRecruitmentUrl = (language) =>
+  `${SITE_URL}${techRecruitmentSeo[language === 'en' ? 'en' : 'pt'].path}`;
 
-export const getRecruitmentAlternates = (language) => ({
-  canonical: getRecruitmentUrl(language),
+export const getTechRecruitmentAlternates = (language) => ({
+  canonical: getTechRecruitmentUrl(language),
   languages: {
-    'pt-BR': getRecruitmentUrl('pt'),
-    en: getRecruitmentUrl('en'),
-    'x-default': getRecruitmentUrl('pt'),
+    'pt-BR': getTechRecruitmentUrl('pt'),
+    en: getTechRecruitmentUrl('en'),
+    'x-default': getTechRecruitmentUrl('pt'),
+  },
+});
+
+export const getCandidateUrl = (language) =>
+  `${SITE_URL}${candidateSeo[language === 'en' ? 'en' : 'pt'].path}`;
+
+export const getCandidateAlternates = (language) => ({
+  canonical: getCandidateUrl(language),
+  languages: {
+    'pt-BR': getCandidateUrl('pt'),
+    en: getCandidateUrl('en'),
+    'x-default': getCandidateUrl('pt'),
   },
 });
 
@@ -79,7 +107,7 @@ export function getHomeStructuredData(language, faqItems) {
         '@id': ORGANIZATION_ID,
         name: 'Nevada Consulting',
         description:
-          'Founder-led technology recruiting and talent strategy consultancy serving companies in Brazil and international markets.',
+          'Founder-led senior recruiting and talent strategy consultancy serving companies across technology and strategic business functions in Brazil and international markets.',
         url: SITE_URL,
         logo: {
           '@type': 'ImageObject',
@@ -155,10 +183,10 @@ export function getHomeStructuredData(language, faqItems) {
         inLanguage: isPortuguese ? 'pt-BR' : 'en',
         mainEntity: faqItems.map((item) => ({
           '@type': 'Question',
-          name: item.question,
+          name: item.question ?? item.q,
           acceptedAnswer: {
             '@type': 'Answer',
-            text: item.answer,
+            text: item.answer ?? item.a,
           },
         })),
       },
@@ -172,6 +200,8 @@ export function getServiceStructuredData({
   name,
   description,
   serviceType,
+  collectionName,
+  collectionUrl,
 }) {
   const path = `/services/${slug}`;
   const url = getLocalizedUrl(language, path);
@@ -207,8 +237,8 @@ export function getServiceStructuredData({
           {
             '@type': 'ListItem',
             position: 2,
-            name: isPortuguese ? 'Serviços' : 'Services',
-            item: `${getLocalizedUrl(language)}#services`,
+            name: collectionName ?? (isPortuguese ? 'Serviços' : 'Services'),
+            item: collectionUrl ?? `${getLocalizedUrl(language)}#services`,
           },
           {
             '@type': 'ListItem',
@@ -222,10 +252,10 @@ export function getServiceStructuredData({
   };
 }
 
-export function getRecruitmentStructuredData(language, faqItems) {
+export function getTechRecruitmentStructuredData(language, faqItems) {
   const normalizedLanguage = language === 'en' ? 'en' : 'pt';
-  const seo = recruitmentSeo[normalizedLanguage];
-  const url = getRecruitmentUrl(normalizedLanguage);
+  const seo = techRecruitmentSeo[normalizedLanguage];
+  const url = getTechRecruitmentUrl(normalizedLanguage);
   const isPortuguese = normalizedLanguage === 'pt';
 
   return {
@@ -248,7 +278,10 @@ export function getRecruitmentStructuredData(language, faqItems) {
         serviceType: seo.serviceType,
         url,
         provider: { '@id': ORGANIZATION_ID },
-        areaServed: { '@type': 'Country', name: 'Brazil' },
+        areaServed: [
+          { '@type': 'Country', name: 'Brazil' },
+          { '@type': 'Place', name: 'Worldwide' },
+        ],
         availableLanguage: ['Portuguese', 'English'],
       },
       {
@@ -266,10 +299,10 @@ export function getRecruitmentStructuredData(language, faqItems) {
         inLanguage: isPortuguese ? 'pt-BR' : 'en',
         mainEntity: faqItems.map((item) => ({
           '@type': 'Question',
-          name: item.q,
+          name: item.question ?? item.q,
           acceptedAnswer: {
             '@type': 'Answer',
-            text: item.a,
+            text: item.answer ?? item.a,
           },
         })),
       },
@@ -290,6 +323,58 @@ export function getRecruitmentStructuredData(language, faqItems) {
             item: url,
           },
         ],
+      },
+    ],
+  };
+}
+
+export function getCandidateStructuredData(language) {
+  const normalizedLanguage = language === 'en' ? 'en' : 'pt';
+  const seo = candidateSeo[normalizedLanguage];
+  const url = getCandidateUrl(normalizedLanguage);
+  const isPortuguese = normalizedLanguage === 'pt';
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${url}/#webpage`,
+        url,
+        name: seo.title,
+        description: seo.description,
+        inLanguage: isPortuguese ? 'pt-BR' : 'en',
+        about: { '@id': PERSON_ID },
+        mainEntity: [
+          { '@id': `${url}/#resume-linkedin` },
+          { '@id': `${url}/#interview-preparation` },
+        ],
+      },
+      {
+        '@type': 'Service',
+        '@id': `${url}/#resume-linkedin`,
+        name: isPortuguese
+          ? 'Revisão de currículo e LinkedIn'
+          : 'Resume and LinkedIn review',
+        serviceType: 'Career consulting',
+        provider: { '@id': ORGANIZATION_ID },
+        url: getLocalizedUrl(
+          normalizedLanguage,
+          '/services/resume-linkedin-portfolio',
+        ),
+      },
+      {
+        '@type': 'Service',
+        '@id': `${url}/#interview-preparation`,
+        name: isPortuguese
+          ? 'Preparação para entrevistas'
+          : 'Interview preparation',
+        serviceType: 'Career consulting',
+        provider: { '@id': ORGANIZATION_ID },
+        url: getLocalizedUrl(
+          normalizedLanguage,
+          '/services/interview-preparation',
+        ),
       },
     ],
   };

@@ -1,5 +1,4 @@
 export const slugToKey = {
-  'high-performance-team': 'first',
   'recruitment-training': 'third',
   'resume-linkedin-portfolio': 'fifth',
   'interview-preparation': 'sixth',
@@ -8,14 +7,6 @@ export const slugToKey = {
 export const WHATSAPP_NUMBER = '5511994607649';
 
 export const serviceItems = [
-  {
-    id: 1,
-    slug: 'high-performance-team',
-    translationKey: 'first',
-    duration: 60,
-    b2b: true,
-    name: { pt: 'Equipe de Alto Desempenho', en: 'High Performance Team' },
-  },
   {
     id: 3,
     slug: 'recruitment-training',
