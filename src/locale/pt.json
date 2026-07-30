@@ -1,17 +1,19 @@
 {
   "translation": {
     "navbar": {
-      "home": "inicio",
-      "services": "serviços",
-      "clients": "clientes",
-      "about": "sobre",
-      "contact": "contato",
+      "home": "Início",
+      "services": "Serviços",
+      "clients": "Clientes",
+      "about": "Sobre",
+      "contact": "Contato",
       "login": "Login",
       "logout": "Desconectar",
       "myAccount": "Minha conta",
       "homePage": "Página inicial",
-      "language": "idioma",
-      "recrutamento": "Recrutamento"
+      "language": "Idioma",
+      "recrutamento": "Recrutamento",
+      "candidates": "Para candidatos",
+      "method": "Método"
     },
     "header": {
       "subtitle": "Recrutamento global B2B e B2C"
@@ -103,8 +105,8 @@
       "notFound": "Serviço não encontrado",
       "b2cLabel": "Para candidatos",
       "b2bLabel": "Soluções corporativas",
-      "ctaTitleB2C": "Pronto para dar o próximo passo na sua carreira?",
-      "ctaSubtitleB2C": "Fale com uma especialista e descubra qual serviço é ideal para você.",
+      "ctaTitleB2C": "Consultoria para candidatos",
+      "ctaSubtitleB2C": "Currículo, LinkedIn e preparação para entrevistas com a visão prática de quem recruta no Brasil e no exterior.",
       "ctaTitleB2B": "Pronto para transformar sua empresa?",
       "ctaSubtitleB2B": "Fale com uma especialista e descubra como podemos impulsionar o seu negócio.",
       "ctaButton": "Contratar um serviço",
@@ -197,7 +199,7 @@
         "method": "Método",
         "expertise": "Expertise",
         "cases": "Resultados",
-        "talk": "Fale com a Juliana",
+        "talk": "Fale conosco",
         "aria": "Navegação principal",
         "toggle": "Abrir ou fechar menu"
       },
@@ -335,11 +337,17 @@
       },
       "expertise": {
         "eyebrow": "Expertise à frente de cada busca",
+        "storyEyebrow": "Como a Nevada Co. surgiu",
         "title": "Juliana Carvalho",
         "role": "Founder & Senior Talent Consultant",
         "quote": "“Meu trabalho é encontrar as pessoas capazes de transformar ambição em execução.”",
-        "body1": "Psicóloga pela UFMG, MBA em Gestão de Negócios pela USP e formação executiva no College of Business da University of Akron, nos Estados Unidos.",
-        "body2": "Juliana liderou times de Talent Acquisition em empresas de referência e hoje apoia organizações a contratar profissionais que elevam capacidade, consciência e resultado.",
+        "body": [
+          "Fundei a Nevada depois de mais de uma década observando, dentro das organizações, como decisões sobre pessoas são frequentemente tratadas com a urgência de uma vaga a preencher — e não com o rigor de uma decisão estratégica de negócio.",
+          "Sou psicóloga pela UFMG, com MBA em Business pela USP e formação executiva em Management pela University of Akron, nos Estados Unidos. Construí uma carreira que vai além do recrutamento: liderei áreas de Talent Acquisition, estruturei operações, implantei ATS, defini métricas de performance, apoiei executivos na tomada de decisão e participei da construção de organizações em diferentes estágios de crescimento.",
+          "Antes de fundar a Nevada, passei anos dentro de empresas vendo processos seletivos acontecerem do jeito errado: rápidos demais, genéricos demais, feitos para bater meta e não para durar. Cansei de ver contratações que pareciam certas no papel e desmoronaram em três meses porque ninguém parou para olhar o que realmente importava.",
+          "Criei a Nevada em 2020 para fazer diferente.",
+          "Hoje a consultoria trabalha com empresas que não querem apenas encher o funil: querem um recrutamento que se paga. Uso métodos, estudos e ciência para entregar o talento que o negócio precisa."
+        ],
         "facts": [
           "Talent Acquisition global",
           "Tech & leadership hiring",
@@ -409,18 +417,26 @@
         "reach": "São Paulo · Alcance Global"
       }
     },
+    "candidatePage": {
+      "eyebrow": "Para candidatos",
+      "title": "Consultoria para pessoas que querem comunicar melhor o próprio valor.",
+      "body": "Posicionamento de currículo e LinkedIn, preparação para entrevistas e orientação prática com uma recrutadora global que conhece os dois lados do processo.",
+      "whatsapp": "Fale com a gente no WhatsApp",
+      "whatsappPrefill": "Olá! Quero saber mais sobre os serviços de consultoria para candidatos.",
+      "servicesCta": "Conheça os serviços"
+    },
     "recrutamento": {
       "hero": {
         "h1_before": "Pare de perder",
         "h1_bold1": "tempo",
-        "h1_middle": "em processos lentos - e",
+        "h1_middle": "em processos lentos e",
         "h1_bold2": "dinheiro",
         "h1_after": "com contratações erradas.",
         "subtitle": "Ajudamos empresas em crescimento a contratar profissionais excepcionais de forma rápida, menos custosa e sem risco.",
         "btnWA": "Fale conosco no WhatsApp"
       },
       "visual": {
-        "eyebrow": "Tecnologia no centro. Recrutamento sênior para decisões críticas.",
+        "eyebrow": "Tecnologia no centro. Estratégia de recrutamento para decisões críticas.",
         "searchLabel": "Busca estratégica",
         "active": "Em andamento",
         "role": "Posição crítica",
@@ -451,10 +467,26 @@
       },
       "stats": {
         "title": "Os dados do mercado",
-        "stat1": "das empresas erraram uma contratação em 2025",
-        "stat2": "dos erros de contratação estão relacionados ao fit cultural",
-        "stat3prefix": "Até",
-        "stat3": "do salário anual é o custo de uma contratação errada"
+        "items": [
+          {
+            "value": "53%",
+            "description": "das empresas admitem ter feito contratações erradas no último ano",
+            "source": "Fonte: Você RH",
+            "href": "https://vocerh.abril.com.br/politicasepraticas/53-das-empresas-admitem-ter-feito-contratacoes-erradas-no-ultimo-ano/"
+          },
+          {
+            "value": "Até 150%",
+            "description": "do salário anual da posição pode corresponder ao custo de uma substituição",
+            "source": "Fonte: HBR Analytic Services",
+            "href": "https://hbr.org/resources/pdfs/tools/17065_HBR_Workday_Whitepaper_online.pdf"
+          },
+          {
+            "value": "61%",
+            "description": "dos erros são atribuídos a comportamentos inadequados; 39% têm relação com incompatibilidade técnica",
+            "source": "Fonte: Você RH",
+            "href": "https://vocerh.abril.com.br/politicasepraticas/53-das-empresas-admitem-ter-feito-contratacoes-erradas-no-ultimo-ano/"
+          }
+        ]
       },
       "numbers": {
         "title": "Nossos números",
@@ -506,11 +538,7 @@
           { "title": "Liderança", "detail": "Executivos e gestores seniores" },
           { "title": "Saúde", "detail": "Operações e posições estratégicas" },
           { "title": "Fintechs", "detail": "Negócio, produto e operações" },
-          { "title": "Corporativo", "detail": "Funções-chave para escalar" },
-          {
-            "title": "Construção Civil",
-            "detail": "Gestão e especialistas de negócio"
-          }
+          { "title": "Corporativo", "detail": "Funções-chave para escalar" }
         ]
       },
       "juliana": {
@@ -526,33 +554,28 @@
         "linkedinCta": "Conheça a trajetória completa no LinkedIn"
       },
       "metodo": {
-        "title": "Nosso processo",
+        "eyebrow": "Método Nevada",
+        "title": "Precisão antes da velocidade. Velocidade com direção.",
+        "body": "Um processo próximo, transparente e orientado por evidências.",
         "steps": [
-          {
-            "name": "Awareness",
-            "desc": "Mapeamento do mercado e identificação de talentos"
-          },
-          {
-            "name": "Sourcing",
-            "desc": "Abordagem ativa na rede e atração de candidatos"
-          },
-          {
-            "name": "Interview",
-            "desc": "Entrevistas técnicas e comportamentais conduzidas pessoalmente"
-          },
-          {
-            "name": "Shortlist",
-            "desc": "Apresentação de até 3 finalistas com relatório de fit"
-          },
-          {
-            "name": "Fechamento",
-            "desc": "Suporte na oferta, negociação e decisão final"
-          },
-          {
-            "name": "Acompanhamento",
-            "desc": "Follow-up pós-contratação durante o período de garantia"
-          }
-        ]
+          [
+            "Contexto",
+            "Entendemos estratégia, cultura e o problema que essa contratação precisa resolver."
+          ],
+          [
+            "Scorecard",
+            "Traduzimos a vaga em resultados esperados, competências e critérios objetivos de decisão."
+          ],
+          [
+            "Search & select",
+            "Mapeamos o mercado, conduzimos a abordagem ativa e avaliamos trajetória, repertório e motivação."
+          ],
+          [
+            "Shortlist",
+            "Apresentação de pelo menos 3 finalistas com relatório de fit em 5 dias úteis."
+          ]
+        ],
+        "metric": "Suporte na proposta e acompanhamento durante os 3 meses de garantia."
       },
       "prova": {
         "title": "Quem contrata, volta e recomenda",

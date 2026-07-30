@@ -176,6 +176,7 @@ export default function TalentScorecard({ copy }) {
             <span
               key={height}
               style={{
+                // @ts-ignore
                 '--bar-height': `${height}%`,
                 '--bar-delay': `${index * 90}ms`,
               }}

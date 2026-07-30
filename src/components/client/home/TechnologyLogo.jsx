@@ -1,38 +1,48 @@
-import { SiGo, SiPython, SiTypescript } from 'react-icons/si';
+import Image from 'next/image';
 
-const technologyIcons = {
-  TypeScript: SiTypescript,
-  Python: SiPython,
-  Go: SiGo,
+const technologyLogos = {
+  TypeScript: {
+    src: '/brands/typescript.svg',
+    width: 128,
+    height: 128,
+    className: 'h-7 w-7',
+  },
+  Python: {
+    src: '/brands/python.svg',
+    width: 128,
+    height: 128,
+    className: 'h-8 w-8',
+  },
+  Go: {
+    src: '/brands/go.svg',
+    width: 207,
+    height: 78,
+    className: 'h-6 w-auto max-w-none',
+  },
 };
 
-export default function TechnologyLogo({ technology }) {
-  const Icon = technologyIcons[technology];
+export default function TechnologyLogo({ compact = false, technology }) {
+  const logo = technologyLogos[technology];
+
+  if (!logo) return null;
+
+  const isGo = technology === 'Go';
+  const containerClassName = isGo ? (compact ? 'w-11' : 'w-16') : 'w-9';
+  const imageClassName =
+    isGo && compact ? 'h-auto w-10 max-w-none' : logo.className;
 
   return (
     <span
-      className={`relative inline-flex h-9 shrink-0 items-center justify-center ${
-        technology === 'Go' ? 'w-11' : 'w-9'
-      }`}
+      className={`inline-flex h-9 shrink-0 items-center justify-center ${containerClassName}`}
       title={technology}
-      role='img'
-      aria-label={`${technology} logo`}
     >
-      {technology === 'Python' ? (
-        <span className='relative h-7 w-7' aria-hidden='true'>
-          <Icon className='absolute inset-0 h-full w-full text-[#3776ab] [clip-path:inset(0_0_49%_0)]' />
-          <Icon className='absolute inset-0 h-full w-full text-[#ffd43b] [clip-path:inset(49%_0_0_0)]' />
-        </span>
-      ) : (
-        <Icon
-          className={
-            technology === 'TypeScript'
-              ? 'h-7 w-7 text-[#3178c6]'
-              : 'h-8 w-11 max-w-none text-[#00add8]'
-          }
-          aria-hidden='true'
-        />
-      )}
+      <Image
+        src={logo.src}
+        alt={`${technology} logo`}
+        width={logo.width}
+        height={logo.height}
+        className={imageClassName}
+      />
     </span>
   );
 }

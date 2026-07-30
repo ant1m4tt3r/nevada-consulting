@@ -5,9 +5,11 @@ import BookServiceButton from '../../../../components/client/BookServiceButton';
 import JsonLd from '../../../../components/seo/JsonLd';
 import { slugToKey, serviceItems } from '../../../../lib/servicesConfig';
 import {
+  getCandidateUrl,
   getLanguageAlternates,
   getLocalizedUrl,
   getServiceStructuredData,
+  getTechRecruitmentUrl,
 } from '../../../../lib/seo';
 import ptTranslations from '../../../../locale/pt.json';
 import enTranslations from '../../../../locale/en.json';
@@ -279,7 +281,14 @@ export async function generateMetadata({ params }) {
   const serviceTitle = service.seoTitle ?? service.subtitle;
   const description = service.seoDescription ?? service.description;
   const title = `${serviceTitle} | Nevada Consulting`;
-  const image = language === 'en' ? '/og-en.png' : '/og.png';
+  const candidateService = ['fifth', 'sixth'].includes(translationKey);
+  const image = candidateService
+    ? language === 'en'
+      ? '/og-candidates-en.png'
+      : '/og-candidates.png'
+    : language === 'en'
+      ? '/og-tech-en.png'
+      : '/og-tech.png';
 
   return {
     title: { absolute: title },
@@ -322,6 +331,23 @@ export default async function ServicePage({ params }) {
   const service = t.services[translationKey];
   const backLabel = t.services.backToServices;
   const serviceConfig = serviceItems.find((s) => s.slug === slug);
+  const serviceIndexPath = serviceConfig?.b2b
+    ? lang === 'en'
+      ? '/en/recruitment#services'
+      : '/pt/recrutamento#services'
+    : lang === 'en'
+      ? '/en/candidates#candidate-services'
+      : '/pt/candidatos#candidate-services';
+  const serviceIndexUrl = serviceConfig?.b2b
+    ? `${getTechRecruitmentUrl(lang)}#services`
+    : `${getCandidateUrl(lang)}#candidate-services`;
+  const serviceIndexName = serviceConfig?.b2b
+    ? lang === 'pt'
+      ? 'Recrutamento'
+      : 'Recruitment'
+    : lang === 'pt'
+      ? 'Serviços para candidatos'
+      : 'Candidate services';
   const pageCopy =
     lang === 'pt'
       ? {
@@ -372,6 +398,8 @@ export default async function ServicePage({ params }) {
             : lang === 'pt'
               ? 'Consultoria de carreira'
               : 'Career consulting',
+          collectionName: serviceIndexName,
+          collectionUrl: serviceIndexUrl,
         })}
       />
       <Navbar hideNav />
@@ -379,7 +407,7 @@ export default async function ServicePage({ params }) {
         <section className='border-b border-brand-line bg-brand-paper py-16 md:py-24'>
           <div className='mx-auto w-[calc(100%-40px)] max-w-[1180px]'>
             <Link
-              href={`/${lang}#services`}
+              href={serviceIndexPath}
               className='mb-12 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-brand-violet transition hover:-translate-x-1'
             >
               <span>←</span> {backLabel}

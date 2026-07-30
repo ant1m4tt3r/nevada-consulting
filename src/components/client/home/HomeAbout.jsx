@@ -7,7 +7,9 @@ import juliana from '../../../assets/imgs/juProfile2.webp';
 
 export default function HomeAbout() {
   const { t } = useTranslation();
-  const facts = t('home.expertise.facts', { returnObjects: true });
+  const copy = t('home.expertise', { returnObjects: true });
+  const facts = copy.facts;
+  const body = copy.body;
 
   return (
     <section className='bg-brand-cream py-20 md:py-28' id='about'>
@@ -23,33 +25,30 @@ export default function HomeAbout() {
           </div>
           <div className='absolute -bottom-5 left-5 right-5 rounded-2xl border border-white/70 bg-brand-paper/95 p-5 shadow-xl backdrop-blur md:left-8 md:right-8'>
             <span className='text-[10px] font-black uppercase tracking-[0.16em] text-brand-violet'>
-              {t('home.expertise.founderLed')}
+              {copy.founderLed}
             </span>
-            <strong className='mt-2 block text-sm'>
-              {t('home.expertise.caption')}
-            </strong>
+            <strong className='mt-2 block text-sm'>{copy.caption}</strong>
           </div>
         </div>
 
         <div>
           <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-violet'>
-            {t('home.expertise.eyebrow')}
+            {copy.storyEyebrow}
           </div>
           <h2 className='text-5xl font-black leading-none tracking-[-0.05em] md:text-6xl'>
-            {t('home.expertise.title')}
+            {copy.title}
           </h2>
           <span className='mt-3 block text-sm font-bold uppercase tracking-[0.08em] text-purple-primary'>
-            {t('home.expertise.role')}
+            {copy.role}
           </span>
           <blockquote className='my-8 border-l-2 border-purple-primary pl-6 font-editorial text-2xl leading-snug text-brand-violet'>
-            {t('home.expertise.quote')}
+            {copy.quote}
           </blockquote>
-          <p className='text-sm leading-relaxed text-brand-muted'>
-            {t('home.expertise.body1')}
-          </p>
-          <p className='mt-4 text-sm leading-relaxed text-brand-muted'>
-            {t('home.expertise.body2')}
-          </p>
+          <div className='space-y-4 text-sm leading-relaxed text-brand-muted'>
+            {body.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
           <ul className='mt-7 grid gap-3 sm:grid-cols-2'>
             {facts.map((fact) => (
               <li
@@ -68,7 +67,7 @@ export default function HomeAbout() {
             rel='noreferrer'
           >
             <FiLinkedin />
-            {t('home.expertise.linkedin')}
+            {copy.linkedin}
             <FiArrowUpRight />
           </a>
         </div>

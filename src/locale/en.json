@@ -11,7 +11,9 @@
       "myAccount": "My account",
       "homePage": "Home page",
       "language": "language",
-      "recrutamento": "Recruitment"
+      "recrutamento": "Recruitment",
+      "candidates": "For candidates",
+      "method": "Method"
     },
     "header": {
       "subtitle": "B2B and B2C global recruiting"
@@ -93,8 +95,8 @@
       "notFound": "Service not found",
       "b2cLabel": "For you",
       "b2bLabel": "Corporate solutions",
-      "ctaTitleB2C": "Ready to take the next step in your career?",
-      "ctaSubtitleB2C": "Talk to a specialist and find out which service is right for you.",
+      "ctaTitleB2C": "Consulting for candidates",
+      "ctaSubtitleB2C": "Resume, LinkedIn and interview preparation through the practical perspective of a recruiter working in Brazil and abroad.",
       "ctaTitleB2B": "Ready to transform your company?",
       "ctaSubtitleB2B": "Talk to a specialist and find out how we can help your business grow.",
       "ctaButton": "Hire a service",
@@ -325,11 +327,17 @@
       },
       "expertise": {
         "eyebrow": "Expertise behind every search",
+        "storyEyebrow": "How Nevada Co. began",
         "title": "Juliana Carvalho",
         "role": "Founder & Senior Talent Consultant",
         "quote": "“My work is finding the people who can turn ambition into execution.”",
-        "body1": "A psychologist from UFMG, with an MBA in Business Management from USP and executive education at the University of Akron College of Business in the United States.",
-        "body2": "Juliana has led Talent Acquisition teams at respected companies and now helps organizations hire professionals who elevate capability, awareness and results.",
+        "body": [
+          "I founded Nevada after more than a decade of observing how decisions about people are often treated with the urgency of filling a vacancy instead of the rigor of a strategic business decision.",
+          "I am a psychologist from UFMG, with an MBA in Business from USP and executive education in Management at the University of Akron in the United States. I built a career that goes beyond recruiting: I led Talent Acquisition functions, structured operations, implemented ATS platforms, defined performance metrics, supported executive decisions and helped build organizations at different stages of growth.",
+          "Before founding Nevada, I spent years inside companies watching selection processes happen the wrong way: too fast, too generic and designed to hit a target rather than last. I grew tired of hires that looked right on paper and fell apart three months later because nobody stopped to examine what truly mattered.",
+          "I created Nevada in 2020 to do things differently.",
+          "Today, the consultancy works with companies that do not simply want to fill the funnel: they want recruitment that pays for itself. I use methods, research and science to deliver the talent the business needs."
+        ],
         "facts": [
           "Global Talent Acquisition",
           "Tech & leadership hiring",
@@ -399,18 +407,26 @@
         "reach": "São Paulo · Global reach"
       }
     },
+    "candidatePage": {
+      "eyebrow": "For candidates",
+      "title": "Career consulting for people who want to communicate their value better.",
+      "body": "Resume and LinkedIn positioning, interview preparation and practical guidance from a global recruiter who understands both sides of the process.",
+      "whatsapp": "Talk to us on WhatsApp",
+      "whatsappPrefill": "Hi! I would like to learn more about Nevada's consulting services for candidates.",
+      "servicesCta": "Explore the services"
+    },
     "recrutamento": {
       "hero": {
         "h1_before": "Stop wasting",
         "h1_bold1": "time",
-        "h1_middle": "on slow processes — and",
+        "h1_middle": "on slow processes and",
         "h1_bold2": "money",
         "h1_after": "on bad hires.",
         "subtitle": "We help growing companies hire exceptional talent quickly, cost-effectively, and without risk.",
         "btnWA": "Talk to us on WhatsApp"
       },
       "visual": {
-        "eyebrow": "Technology at the core. Senior recruitment for critical decisions.",
+        "eyebrow": "Technology at the core. Recruitment strategy for critical decisions.",
         "searchLabel": "Strategic search",
         "active": "In progress",
         "role": "Critical position",
@@ -441,10 +457,26 @@
       },
       "stats": {
         "title": "Market data",
-        "stat1": "of companies made a bad hire in 2025",
-        "stat2": "of hiring mistakes are related to cultural fit",
-        "stat3prefix": "Up to",
-        "stat3": "of annual salary is the cost of a bad hire"
+        "items": [
+          {
+            "value": "53%",
+            "description": "of companies admit making a bad hire in the last year",
+            "source": "Source: Você RH",
+            "href": "https://vocerh.abril.com.br/politicasepraticas/53-das-empresas-admitem-ter-feito-contratacoes-erradas-no-ultimo-ano/"
+          },
+          {
+            "value": "Up to 150%",
+            "description": "of the position's annual salary can represent the cost of replacement",
+            "source": "Source: HBR Analytic Services",
+            "href": "https://hbr.org/resources/pdfs/tools/17065_HBR_Workday_Whitepaper_online.pdf"
+          },
+          {
+            "value": "61%",
+            "description": "of hiring mistakes are attributed to behavioral issues; 39% relate to technical mismatch",
+            "source": "Source: Você RH",
+            "href": "https://vocerh.abril.com.br/politicasepraticas/53-das-empresas-admitem-ter-feito-contratacoes-erradas-no-ultimo-ano/"
+          }
+        ]
       },
       "numbers": {
         "title": "Our numbers",
@@ -493,11 +525,7 @@
           { "title": "Leadership", "detail": "Senior executives and managers" },
           { "title": "Healthcare", "detail": "Operations and strategic roles" },
           { "title": "Fintechs", "detail": "Business, product and operations" },
-          { "title": "Corporate", "detail": "Key functions for scale" },
-          {
-            "title": "Construction",
-            "detail": "Business leaders and specialists"
-          }
+          { "title": "Corporate", "detail": "Key functions for scale" }
         ]
       },
       "juliana": {
@@ -513,33 +541,28 @@
         "linkedinCta": "See my full journey on LinkedIn"
       },
       "metodo": {
-        "title": "Our process",
+        "eyebrow": "The Nevada method",
+        "title": "Precision before speed. Speed with direction.",
+        "body": "A close, transparent and evidence-led process.",
         "steps": [
-          {
-            "name": "Awareness",
-            "desc": "Market mapping and talent identification"
-          },
-          {
-            "name": "Sourcing",
-            "desc": "Active outreach and candidate attraction"
-          },
-          {
-            "name": "Interview",
-            "desc": "Technical and behavioral interviews conducted personally"
-          },
-          {
-            "name": "Shortlist",
-            "desc": "Presentation of up to 3 finalists with fit report"
-          },
-          {
-            "name": "Closing",
-            "desc": "Support with offer, negotiation, and final decision"
-          },
-          {
-            "name": "Follow-up",
-            "desc": "Post-hire follow-up during the guarantee period"
-          }
-        ]
+          [
+            "Context",
+            "We understand the strategy, culture and problem this hire needs to solve."
+          ],
+          [
+            "Scorecard",
+            "We translate the role into expected outcomes, competencies and objective decision criteria."
+          ],
+          [
+            "Search & select",
+            "We map the market, conduct active outreach and assess track record, judgment and motivation."
+          ],
+          [
+            "Shortlist",
+            "At least 3 finalists presented with a fit report within 5 business days."
+          ]
+        ],
+        "metric": "Offer support and follow-up throughout the 3-month guarantee period."
       },
       "prova": {
         "title": "Clients who return and recommend",

@@ -1,8 +1,7 @@
 import { redirect } from 'next/navigation';
-import HomePage from '../../components/client/HomePage';
+import RecruitmentPage from '../../components/client/recruitment/RecruitmentPage';
 import JsonLd from '../../components/seo/JsonLd';
-import ptTranslations from '../../locale/pt.json';
-import enTranslations from '../../locale/en.json';
+import { getDictionary } from '../../lib/dictionaries';
 import {
   getHomeStructuredData,
   getLanguageAlternates,
@@ -35,8 +34,8 @@ export async function generateMetadata({ params }) {
           height: 630,
           alt:
             language === 'pt'
-              ? 'Nevada Consulting — recrutamento tech e estratégia de talentos'
-              : 'Nevada Consulting — tech recruiting and talent strategy',
+              ? 'Nevada Consulting — recrutamento sênior por success fee'
+              : 'Nevada Consulting — founder-led senior recruitment',
         },
       ],
     },
@@ -54,13 +53,13 @@ export default async function LangPage({ params }) {
 
   if (!['pt', 'en'].includes(lang)) redirect('/pt');
 
-  const translations = lang === 'en' ? enTranslations : ptTranslations;
-  const faqItems = translations.translation.home.faq.items;
+  const dictionary = getDictionary(lang);
+  const faqItems = dictionary.recrutamento.faq.items;
 
   return (
     <>
       <JsonLd data={getHomeStructuredData(lang, faqItems)} />
-      <HomePage />
+      <RecruitmentPage />
     </>
   );
 }

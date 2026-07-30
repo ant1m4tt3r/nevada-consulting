@@ -8,6 +8,8 @@ import { getWhatsappHref } from './constants';
 
 export default function HomeContact() {
   const { t } = useTranslation();
+  const contactCopy = t('contact', { returnObjects: true });
+  const copy = t('home.contact', { returnObjects: true });
 
   return (
     <section className='bg-brand-cream py-20 md:py-28' id='contact'>
@@ -17,23 +19,23 @@ export default function HomeContact() {
             <FiMessageSquare aria-hidden='true' />
           </div>
           <div className='mb-5 text-[11px] font-black uppercase tracking-[0.18em] text-brand-lilac'>
-            {t('home.contact.eyebrow')}
+            {copy.eyebrow}
           </div>
           <h2 className='max-w-2xl text-4xl font-black leading-[1] tracking-[-0.05em] md:text-5xl'>
-            {t('home.contact.title')}
+            {copy.title}
           </h2>
           <p className='mt-5 max-w-2xl text-sm leading-relaxed text-white/70'>
-            {t('home.contact.body')}
+            {copy.body}
           </p>
           <div className='mt-8 flex flex-wrap gap-3'>
             <a
               className='inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/30 px-5 text-xs font-bold text-white transition hover:border-white hover:bg-white/10'
-              href={getWhatsappHref(t('home.contact.prefill'))}
+              href={getWhatsappHref(copy.prefill)}
               target='_blank'
               rel='noreferrer'
             >
               <SiWhatsapp aria-hidden='true' />
-              {t('home.contact.whatsapp')}
+              {copy.whatsapp}
               <FiArrowUpRight aria-hidden='true' />
             </a>
             <a
@@ -41,15 +43,25 @@ export default function HomeContact() {
               href='mailto:contato@nevadaconsulting.com.br'
             >
               <FiMail aria-hidden='true' />
-              {t('home.contact.email')}
+              {copy.email}
             </a>
           </div>
           <span className='mt-5 flex items-center gap-2 text-xs text-white/70'>
             <i className='h-1.5 w-1.5 rounded-full bg-brand-mint' />
-            {t('home.contact.note')}
+            {copy.note}
           </span>
         </div>
-        <HomeContactForm />
+        <HomeContactForm
+          copy={{
+            email: contactCopy.email,
+            error: copy.error,
+            message: contactCopy.message,
+            name: contactCopy.name,
+            send: contactCopy.send,
+            sending: copy.sending,
+            success: contactCopy.thankYouMessage,
+          }}
+        />
       </div>
     </section>
   );

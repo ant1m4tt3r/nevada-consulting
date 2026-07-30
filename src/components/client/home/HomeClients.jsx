@@ -14,21 +14,21 @@ import skintec from '../../../assets/imgs/skintec.webp';
 import trinio from '../../../assets/imgs/trinio.webp';
 
 const clientLogos = [
-  blip,
-  komuh,
-  okto,
-  quive,
-  rv,
-  edvisor,
-  moveo,
-  skintec,
-  trinio,
-  caixa,
+  { image: blip, name: 'Blip' },
+  { image: komuh, name: 'Komuh' },
+  { image: okto, name: 'OKTO' },
+  { image: quive, name: 'Quive' },
+  { image: rv, name: 'Red Ventures' },
+  { image: edvisor, name: 'Edvisor' },
+  { image: moveo, name: 'Moveo.ai' },
+  { image: skintec, name: 'Skintec' },
+  { image: trinio, name: 'Trinio' },
+  { image: caixa, name: 'CAIXA' },
 ];
 
-export default function HomeClients({ title }) {
+export default function HomeClients({ translationKey = 'home.clients' }) {
   const { t } = useTranslation();
-  const label = title ?? t('home.clients');
+  const label = t(translationKey);
 
   return (
     <section
@@ -42,13 +42,17 @@ export default function HomeClients({ title }) {
         </p>
         <div className='nc-logo-viewport'>
           <div className='nc-logo-track'>
-            {[...clientLogos, ...clientLogos].map((clientLogo, index) => (
-              <span key={index} aria-hidden={index >= clientLogos.length}>
+            {[...clientLogos, ...clientLogos].map((client, index) => (
+              <span
+                className='flex h-[68px] w-[168px] shrink-0 items-center justify-center px-5 py-2.5'
+                key={`${client.name}-${index}`}
+                aria-hidden={index >= clientLogos.length}
+              >
                 <Image
-                  src={clientLogo}
-                  alt={index < clientLogos.length ? `Client ${index + 1}` : ''}
-                  width={120}
-                  height={54}
+                  className='h-auto max-h-full w-auto max-w-full object-contain'
+                  src={client.image}
+                  alt={index < clientLogos.length ? client.name : ''}
+                  sizes='128px'
                 />
               </span>
             ))}

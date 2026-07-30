@@ -1,5 +1,9 @@
 import { serviceItems } from '../lib/servicesConfig';
-import { getLocalizedUrl, getRecruitmentUrl } from '../lib/seo';
+import {
+  getCandidateUrl,
+  getLocalizedUrl,
+  getTechRecruitmentUrl,
+} from '../lib/seo';
 
 const languages = ['pt', 'en'];
 
@@ -27,17 +31,33 @@ export default function sitemap() {
       localizedEntry(language, `/services/${service.slug}`),
     ),
   );
-  const recruitmentAlternates = {
-    'pt-BR': getRecruitmentUrl('pt'),
-    en: getRecruitmentUrl('en'),
-    'x-default': getRecruitmentUrl('pt'),
+  const techRecruitmentAlternates = {
+    'pt-BR': getTechRecruitmentUrl('pt'),
+    en: getTechRecruitmentUrl('en'),
+    'x-default': getTechRecruitmentUrl('pt'),
   };
-  const recruitmentPages = languages.map((language) => ({
-    url: getRecruitmentUrl(language),
+  const techRecruitmentPages = languages.map((language) => ({
+    url: getTechRecruitmentUrl(language),
+    changeFrequency: 'monthly',
+    priority: 0.9,
+    alternates: { languages: techRecruitmentAlternates },
+  }));
+  const candidateAlternates = {
+    'pt-BR': getCandidateUrl('pt'),
+    en: getCandidateUrl('en'),
+    'x-default': getCandidateUrl('pt'),
+  };
+  const candidatePages = languages.map((language) => ({
+    url: getCandidateUrl(language),
     changeFrequency: 'monthly',
     priority: 0.8,
-    alternates: { languages: recruitmentAlternates },
+    alternates: { languages: candidateAlternates },
   }));
 
-  return [...homePages, ...servicePages, ...recruitmentPages];
+  return [
+    ...homePages,
+    ...techRecruitmentPages,
+    ...candidatePages,
+    ...servicePages,
+  ];
 }

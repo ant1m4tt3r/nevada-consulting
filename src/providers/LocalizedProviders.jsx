@@ -3,13 +3,15 @@
 import { useState } from 'react';
 import { createInstance } from 'i18next';
 import { I18nextProvider, initReactI18next } from 'react-i18next';
-import ptTranslations from '../locale/pt.json';
+import { SessionProvider } from 'next-auth/react';
 import enTranslations from '../locale/en.json';
+import ptTranslations from '../locale/pt.json';
+import DeveloperConsoleMessage from '../components/client/DeveloperConsoleMessage';
 import { LanguageProvider } from './LanguageContext';
 
 const resources = {
-  pt: ptTranslations,
   en: enTranslations,
+  pt: ptTranslations,
 };
 
 export default function LocalizedProviders({ children, language }) {
@@ -30,8 +32,13 @@ export default function LocalizedProviders({ children, language }) {
   }
 
   return (
-    <I18nextProvider i18n={i18n}>
-      <LanguageProvider initialLanguage={language}>{children}</LanguageProvider>
-    </I18nextProvider>
+    <SessionProvider>
+      <I18nextProvider i18n={i18n}>
+        <LanguageProvider initialLanguage={language}>
+          <DeveloperConsoleMessage language={language} />
+          {children}
+        </LanguageProvider>
+      </I18nextProvider>
+    </SessionProvider>
   );
 }

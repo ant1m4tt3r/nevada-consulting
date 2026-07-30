@@ -30,9 +30,9 @@ export default function RecruitmentButton({ children, location, inverse }) {
         });
       }}
     >
-      <SiWhatsapp className='shrink-0' />
+      <SiWhatsapp className='shrink-0' aria-hidden={true} />
       {children}
-      <FiArrowUpRight className='shrink-0' />
+      <FiArrowUpRight className='shrink-0' aria-hidden={true} />
     </a>
   );
 }

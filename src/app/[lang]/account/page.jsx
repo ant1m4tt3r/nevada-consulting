@@ -99,7 +99,11 @@ export default async function DashboardPage({ params }) {
               <div className='mt-8 rounded-2xl border border-dashed border-brand-line bg-brand-cream p-8 text-center'>
                 <p className='text-brand-muted'>{t.noBookings}</p>
                 <Link
-                  href={`/${lang}#services`}
+                  href={
+                    lang === 'en'
+                      ? '/en/candidates#candidate-services'
+                      : '/pt/candidatos#candidate-services'
+                  }
                   className='mt-5 inline-flex rounded-full bg-brand-ink px-6 py-3 text-sm font-bold text-white transition hover:bg-brand-violet'
                 >
                   {t.services}

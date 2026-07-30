@@ -6,28 +6,29 @@ import TechnologyLogo from './TechnologyLogo';
 
 export default function HomeValueBridge() {
   const { t } = useTranslation();
-  const capabilities = t('home.bridge.capabilities', { returnObjects: true });
-  const outcomes = t('home.bridge.outcomes', { returnObjects: true });
+  const copy = t('home.bridge', { returnObjects: true });
+  const capabilities = copy.capabilities;
+  const outcomes = copy.outcomes;
 
   return (
     <section className='bg-gradient-to-br from-brand-ink to-[#2a1830] py-20 text-white md:py-28'>
       <div className='mx-auto grid w-[calc(100%-40px)] max-w-[1180px] items-center gap-14 lg:grid-cols-[0.8fr_1.2fr]'>
         <div>
           <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-lilac'>
-            {t('home.bridge.eyebrow')}
+            {copy.eyebrow}
           </div>
           <h2 className='text-4xl font-black leading-[1] tracking-[-0.05em] md:text-6xl'>
-            {t('home.bridge.title')}
+            {copy.title}
           </h2>
           <p className='mt-7 max-w-lg text-base leading-relaxed text-white/65'>
-            {t('home.bridge.body')}
+            {copy.body}
           </p>
         </div>
 
         <div className='grid grid-cols-[1fr_42px_1fr] items-stretch rounded-3xl border border-white/[0.08] bg-white/[0.035] p-4 shadow-[0_30px_80px_rgba(0,0,0,0.25)] max-[520px]:grid-cols-1 max-[520px]:gap-2.5'>
           <div className='min-h-[270px] rounded-2xl border border-white/[0.08] bg-[#100d12] p-4 max-[520px]:min-h-[235px]'>
             <div className='text-[10px] font-bold uppercase tracking-[0.12em] text-[#bbb1bf]'>
-              {t('home.bridge.codeLabel')}
+              {copy.codeLabel}
             </div>
             <div className='mt-4 grid gap-2'>
               {capabilities.map(([technology, description]) => (
@@ -35,7 +36,7 @@ export default function HomeValueBridge() {
                   className='grid min-h-16 grid-cols-[44px_1fr] items-center gap-3 rounded-xl border border-[#332e36] bg-[#171419] px-3 py-2.5'
                   key={technology}
                 >
-                  <TechnologyLogo technology={technology} />
+                  <TechnologyLogo compact technology={technology} />
                   <div className='flex min-w-0 flex-col justify-center gap-1'>
                     <strong className='text-xs leading-tight text-[#f1edf2]'>
                       {technology}
@@ -55,7 +56,7 @@ export default function HomeValueBridge() {
 
           <div className='flex min-h-[270px] flex-col gap-2 rounded-2xl border border-white/[0.08] bg-[#f7f4f8] p-4 pt-5 text-brand-ink max-[520px]:min-h-[235px]'>
             <div className='mb-1 text-[10px] font-bold uppercase tracking-[0.12em] text-[#625766]'>
-              {t('home.bridge.impactLabel')}
+              {copy.impactLabel}
             </div>
             {outcomes.map(([metric, label], index) => (
               <div
@@ -90,7 +91,7 @@ export default function HomeValueBridge() {
         </div>
 
         <small className='text-xs text-white/60 lg:col-start-2'>
-          {t('home.bridge.note')}
+          {copy.note}
         </small>
       </div>
     </section>

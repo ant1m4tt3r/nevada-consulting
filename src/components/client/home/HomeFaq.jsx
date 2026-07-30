@@ -5,20 +5,21 @@ import { FiPlus } from 'react-icons/fi';
 
 export default function HomeFaq() {
   const { t } = useTranslation();
-  const items = t('home.faq.items', { returnObjects: true });
+  const copy = t('home.faq', { returnObjects: true });
+  const items = copy.items;
 
   return (
     <section className='bg-brand-paper py-20 md:py-28' id='faq'>
       <div className='mx-auto grid w-[calc(100%-40px)] max-w-[1180px] gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20'>
         <div>
           <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-violet'>
-            {t('home.faq.eyebrow')}
+            {copy.eyebrow}
           </div>
           <h2 className='text-4xl font-black leading-[1] tracking-[-0.05em] md:text-5xl'>
-            {t('home.faq.title')}
+            {copy.title}
           </h2>
           <p className='mt-6 max-w-md text-sm leading-relaxed text-brand-muted'>
-            {t('home.faq.body')}
+            {copy.body}
           </p>
         </div>
 

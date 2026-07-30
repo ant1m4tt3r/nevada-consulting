@@ -4,32 +4,34 @@ import { useTranslation } from 'react-i18next';
 
 export default function HomeProof() {
   const { t } = useTranslation();
+  const copy = t('home.proof', { returnObjects: true });
+  const testimonialCopy = t('testimonials', { returnObjects: true });
   const testimonials = [
     {
-      role: t('testimonials.firstJobPosition'),
-      company: t('testimonials.firstCompany'),
+      role: testimonialCopy.firstJobPosition,
+      company: testimonialCopy.firstCompany,
       paragraphs: [
-        t('testimonials.firstReview1'),
-        t('testimonials.firstReview2'),
-        t('testimonials.firstReview3'),
+        testimonialCopy.firstReview1,
+        testimonialCopy.firstReview2,
+        testimonialCopy.firstReview3,
       ],
     },
     {
-      role: t('testimonials.thirdJobPosition'),
-      company: t('testimonials.thirdCompany'),
+      role: testimonialCopy.thirdJobPosition,
+      company: testimonialCopy.thirdCompany,
       paragraphs: [
-        t('testimonials.thirdReview1'),
-        t('testimonials.thirdReview2'),
-        t('testimonials.thirdReview3'),
+        testimonialCopy.thirdReview1,
+        testimonialCopy.thirdReview2,
+        testimonialCopy.thirdReview3,
       ],
     },
     {
-      role: t('testimonials.secondJobPosition'),
-      company: t('testimonials.secondCompany'),
+      role: testimonialCopy.secondJobPosition,
+      company: testimonialCopy.secondCompany,
       paragraphs: [
-        t('testimonials.secondReview1'),
-        t('testimonials.secondReview2'),
-        t('testimonials.secondReview3'),
+        testimonialCopy.secondReview1,
+        testimonialCopy.secondReview2,
+        testimonialCopy.secondReview3,
       ],
     },
   ];
@@ -39,10 +41,10 @@ export default function HomeProof() {
       <div className='mx-auto w-[calc(100%-40px)] max-w-[1180px]'>
         <div className='max-w-3xl'>
           <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-lilac'>
-            {t('home.proof.eyebrow')}
+            {copy.eyebrow}
           </div>
           <h2 className='text-4xl font-black leading-[1] tracking-[-0.05em] md:text-6xl'>
-            {t('home.proof.title')}
+            {copy.title}
           </h2>
         </div>
         <div className='mt-14 grid gap-px overflow-hidden rounded-3xl border border-white/15 bg-white/15 lg:grid-cols-3'>

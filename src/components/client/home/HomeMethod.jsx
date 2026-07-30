@@ -3,23 +3,25 @@
 import { useTranslation } from 'react-i18next';
 import { FiBarChart2 } from 'react-icons/fi';
 
-export default function HomeMethod() {
+export default function HomeMethod({
+  id = 'method',
+  translationKey = 'home.method',
+}) {
   const { t } = useTranslation();
-  const steps = t('home.method.steps', { returnObjects: true });
+  const copy = t(translationKey, { returnObjects: true });
+  const steps = copy.steps;
 
   return (
-    <section className='bg-brand-paper py-20 md:py-28' id='method'>
+    <section className='bg-brand-paper py-20 md:py-28' id={id}>
       <div className='mx-auto w-[calc(100%-40px)] max-w-[1180px]'>
         <div className='max-w-3xl'>
           <div className='mb-6 text-[11px] font-black uppercase tracking-[0.18em] text-brand-violet'>
-            {t('home.method.eyebrow')}
+            {copy.eyebrow}
           </div>
           <h2 className='text-4xl font-black leading-[1] tracking-[-0.05em] md:text-6xl'>
-            {t('home.method.title')}
+            {copy.title}
           </h2>
-          <p className='mt-8 text-lg text-brand-muted'>
-            {t('home.method.body')}
-          </p>
+          <p className='mt-8 text-lg text-brand-muted'>{copy.body}</p>
         </div>
 
         <div className='mt-14 grid gap-px overflow-hidden rounded-3xl border border-brand-line bg-brand-line md:grid-cols-2 lg:grid-cols-4'>
@@ -39,7 +41,7 @@ export default function HomeMethod() {
 
         <div className='mt-8 flex items-center gap-4 rounded-2xl bg-brand-lilac/60 px-6 py-5 text-brand-violet'>
           <FiBarChart2 className='shrink-0 text-xl' />
-          <span>{t('home.method.metric')}</span>
+          <span>{copy.metric}</span>
           <i className='hidden h-px flex-1 bg-purple-primary/25 sm:block' />
         </div>
       </div>

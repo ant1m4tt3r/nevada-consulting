@@ -1,28 +1,27 @@
 import JsonLd from '../../../components/seo/JsonLd';
-import RecruitmentPage from '../../recrutamento/page';
-import enTranslations from '../../../locale/en.json';
-import ptTranslations from '../../../locale/pt.json';
+import HomePage from '../../../components/client/HomePage';
+import { getDictionary } from '../../../lib/dictionaries';
 import {
-  getRecruitmentAlternates,
-  getRecruitmentStructuredData,
-  getRecruitmentUrl,
-  recruitmentSeo,
+  getTechRecruitmentAlternates,
+  getTechRecruitmentStructuredData,
+  getTechRecruitmentUrl,
+  techRecruitmentSeo,
 } from '../../../lib/seo';
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
   const language = lang === 'en' ? 'en' : 'pt';
-  const seo = recruitmentSeo[language];
-  const image = language === 'en' ? '/og-en.png' : '/og.png';
+  const seo = techRecruitmentSeo[language];
+  const image = language === 'en' ? '/og-tech-en.png' : '/og-tech.png';
 
   return {
     title: { absolute: seo.title },
     description: seo.description,
-    alternates: getRecruitmentAlternates(language),
+    alternates: getTechRecruitmentAlternates(language),
     openGraph: {
       title: seo.title,
       description: seo.description,
-      url: getRecruitmentUrl(language),
+      url: getTechRecruitmentUrl(language),
       type: 'website',
       locale: seo.locale,
       alternateLocale: language === 'pt' ? ['en_US'] : ['pt_BR'],
@@ -34,8 +33,8 @@ export async function generateMetadata({ params }) {
           height: 630,
           alt:
             language === 'pt'
-              ? 'Nevada Consulting — recrutamento sênior multissetorial'
-              : 'Nevada Consulting — senior recruitment across industries',
+              ? 'Nevada Consulting — recrutamento tech e estratégia de talentos'
+              : 'Nevada Consulting — tech recruiting and talent strategy',
         },
       ],
     },
@@ -51,13 +50,13 @@ export async function generateMetadata({ params }) {
 export default async function LocalizedRecruitmentPage({ params }) {
   const { lang } = await params;
   const language = lang === 'en' ? 'en' : 'pt';
-  const translations = language === 'en' ? enTranslations : ptTranslations;
-  const faqItems = translations.translation.recrutamento.faq.items;
+  const dictionary = getDictionary(language);
+  const faqItems = dictionary.home.faq.items;
 
   return (
     <>
-      <JsonLd data={getRecruitmentStructuredData(language, faqItems)} />
-      <RecruitmentPage />
+      <JsonLd data={getTechRecruitmentStructuredData(language, faqItems)} />
+      <HomePage />
     </>
   );
 }

@@ -24,14 +24,29 @@ const Navbar = () => {
 
   const language = currentLanguage === 'en' ? 'en' : 'pt';
   const home = `/${language}`;
-  const recruitmentHref =
+  const techRecruitmentHref =
     language === 'en' ? '/en/recruitment' : '/pt/recrutamento';
+  const candidatesHref =
+    language === 'en' ? '/en/candidates' : '/pt/candidatos';
+  const isRecruitmentPage = new Set([
+    '/recrutamento',
+    '/pt/recrutamento',
+    '/pt/recruitment',
+    '/en/recruitment',
+    '/en/recrutamento',
+  ]).has(pathname);
+  const sectionBase = isRecruitmentPage ? techRecruitmentHref : home;
+  const contactHref = `${sectionBase}#contact`;
   const links = [
     [t('navbar.home'), home],
-    [t('navbar.services'), `${home}#services`],
-    [t('navbar.clients'), `${home}#clients`],
-    [t('navbar.about'), `${home}#about`],
-    [t('navbar.contact'), `${home}#contact`],
+    [t('navbar.recrutamento'), techRecruitmentHref],
+    [t('navbar.clients'), `${sectionBase}#clients`],
+    [
+      t('navbar.method'),
+      `${sectionBase}#${isRecruitmentPage ? 'method' : 'processo'}`,
+    ],
+    [t('navbar.about'), `${sectionBase}#about`],
+    [t('navbar.candidates'), candidatesHref],
   ];
 
   const getLocalizedPath = (nextLanguage) => {
@@ -45,6 +60,16 @@ const Navbar = () => {
 
     if (recruitmentPaths.has(pathname)) {
       return nextLanguage === 'en' ? '/en/recruitment' : '/pt/recrutamento';
+    }
+
+    const candidatePaths = new Set([
+      '/pt/candidatos',
+      '/en/candidatos',
+      '/en/candidates',
+    ]);
+
+    if (candidatePaths.has(pathname)) {
+      return nextLanguage === 'en' ? '/en/candidates' : '/pt/candidatos';
     }
 
     return /^\/(pt|en)(\/|$)/.test(pathname)
@@ -64,13 +89,13 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-[18px] z-[80] mx-auto flex min-h-[68px] w-[calc(100%-48px)] max-w-[1180px] items-center justify-between rounded-full border border-brand-line/90 bg-brand-paper/95 px-5 shadow-[0_16px_50px_rgba(23,19,27,0.1)] backdrop-blur-xl transition-transform duration-300 md:px-7 ${
+        className={`fixed inset-x-0 top-[18px] z-[80] mx-auto flex min-h-[68px] w-[calc(100%-48px)] max-w-[1180px] items-center justify-between rounded-full border border-white/15 bg-brand-ink/95 px-5 text-white shadow-[0_16px_50px_rgba(23,19,27,0.22)] backdrop-blur-xl transition-transform duration-300 md:px-7 ${
           scrollDirection === 'down' ? '-translate-y-[110px]' : ''
         }`}
       >
         <Link
           href={home}
-          className='flex shrink-0 items-center gap-3 text-brand-ink'
+          className='flex shrink-0 items-center gap-3 text-white'
           aria-label='Nevada Consulting'
         >
           <span className='flex h-9 w-9 items-center justify-center text-purple-primary [&_svg]:h-full [&_svg]:w-full'>
@@ -87,26 +112,22 @@ const Navbar = () => {
         <nav
           className={`${
             menuOpen ? 'flex' : 'hidden'
-          } absolute left-0 right-0 top-[78px] flex-col items-stretch gap-1 rounded-3xl border border-brand-line bg-brand-paper p-4 shadow-xl min-[1100px]:static min-[1100px]:flex min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:gap-3 min-[1100px]:border-0 min-[1100px]:bg-transparent min-[1100px]:p-0 min-[1100px]:shadow-none [&>a]:whitespace-nowrap [&>a]:rounded-full [&>a]:px-2.5 [&>a]:py-2 [&>a]:text-xs [&>a]:font-bold [&>a]:uppercase [&>a]:tracking-[0.08em] [&>a]:text-brand-muted [&>a]:transition-colors hover:[&>a]:text-brand-violet`}
+          } absolute left-0 right-0 top-[78px] max-h-[calc(100vh-110px)] flex-col items-stretch gap-1 overflow-y-auto rounded-3xl border border-white/10 bg-brand-ink p-4 shadow-xl min-[1100px]:static min-[1100px]:flex min-[1100px]:max-h-none min-[1100px]:flex-row min-[1100px]:items-center min-[1100px]:gap-1 min-[1100px]:overflow-visible min-[1100px]:border-0 min-[1100px]:bg-transparent min-[1100px]:p-0 min-[1100px]:shadow-none [&>a]:whitespace-nowrap [&>a]:rounded-full [&>a]:px-2.5 [&>a]:py-2 [&>a]:text-[11px] [&>a]:font-bold [&>a]:uppercase [&>a]:tracking-[0.07em] [&>a]:text-white/70 [&>a]:transition-colors hover:[&>a]:text-white`}
         >
           {links.map(([label, href]) => (
             <Link key={href} href={href} onClick={() => setMenuOpen(false)}>
               {label}
             </Link>
           ))}
-          <Link href={recruitmentHref} onClick={() => setMenuOpen(false)}>
-            {t('navbar.recrutamento')}
-          </Link>
-
           <div
-            className='flex items-center gap-1.5 px-3 py-2 text-[11px] font-bold text-brand-muted [&_a]:transition-colors hover:[&_a]:text-brand-violet'
+            className='flex items-center gap-1.5 px-2.5 py-2 text-[11px] font-bold text-white/60 [&_a]:transition-colors hover:[&_a]:text-white'
             aria-label='Language'
           >
             {/* Native links keep locale changes reliable before client hydration. */}
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href={getLocalizedPath('pt')}
-              className={language === 'pt' ? 'text-brand-violet' : ''}
+              className={language === 'pt' ? 'text-brand-lilac' : ''}
               onClick={() => handleLanguageChange('pt')}
             >
               PT
@@ -115,7 +136,7 @@ const Navbar = () => {
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href={getLocalizedPath('en')}
-              className={language === 'en' ? 'text-brand-violet' : ''}
+              className={language === 'en' ? 'text-brand-lilac' : ''}
               onClick={() => handleLanguageChange('en')}
             >
               EN
@@ -124,11 +145,11 @@ const Navbar = () => {
 
           {session ? (
             <>
-              <Link className='!text-brand-violet' href={`${home}/account`}>
+              <Link className='!text-brand-lilac' href={`${home}/account`}>
                 {t('navbar.myAccount')}
               </Link>
               <button
-                className='rounded-full px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-brand-muted transition-colors hover:text-brand-violet'
+                className='rounded-full px-2.5 py-2 text-[11px] font-bold uppercase tracking-[0.07em] text-white/70 transition-colors hover:text-white'
                 onClick={() => signOut()}
               >
                 {t('navbar.logout')}
@@ -136,20 +157,28 @@ const Navbar = () => {
             </>
           ) : (
             <button
-              className='flex min-h-10 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-full bg-brand-ink px-5 text-xs font-bold uppercase tracking-[0.08em] text-white transition hover:bg-brand-violet'
+              className='shrink-0 whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-bold uppercase tracking-[0.07em] text-white/70 transition-colors hover:text-white'
               onClick={() => {
                 setLoginOpen(true);
                 setMenuOpen(false);
               }}
             >
               {t('navbar.login')}
-              <FiArrowUpRight className='shrink-0' />
             </button>
           )}
+
+          <Link
+            className='!inline-flex min-h-10 shrink-0 items-center justify-center gap-2 !bg-white !px-4 !font-black !text-brand-ink hover:!bg-brand-lilac'
+            href={contactHref}
+            onClick={() => setMenuOpen(false)}
+          >
+            {t('home.nav.talk')}
+            <FiArrowUpRight className='shrink-0' />
+          </Link>
         </nav>
 
         <button
-          className='flex h-10 w-10 items-center justify-center rounded-full border border-brand-line text-xl text-brand-ink min-[1100px]:hidden'
+          className='flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-xl text-white min-[1100px]:hidden'
           onClick={() => setMenuOpen((open) => !open)}
           aria-label='Toggle menu'
           aria-expanded={menuOpen}
